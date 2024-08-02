@@ -251,9 +251,9 @@ MonoBehaviour:
       customIcon: 
       autoIconDirty: 0
     - guid: 4d1204db9cd567348a726b8300194797
-      iColor: 0
+      iColor: 10
       autoIcon: 
-      customIcon: 
+      customIcon: Prefab Icon
       autoIconDirty: 0
     - guid: c10e2cdc4de5cf347a541b245f34ecb7
       iColor: 0
@@ -349,7 +349,7 @@ MonoBehaviour:
       iColor: 0
       autoIcon: 
       customIcon: 
-      autoIconDirty: 0
+      autoIconDirty: 1
     - guid: dd2b9e231b0ec4a9f97e258072ae2b33
       iColor: 0
       autoIcon: 
@@ -426,9 +426,9 @@ MonoBehaviour:
       customIcon: 
       autoIconDirty: 0
     - guid: b7217dd505f3fde49ae4628ced2f4f09
-      iColor: 0
+      iColor: 6
       autoIcon: 
-      customIcon: 
+      customIcon: ScriptableObject Icon
       autoIconDirty: 0
     - guid: 0d879774009e0454cadb8019d7713fa8
       iColor: 0
@@ -441,9 +441,9 @@ MonoBehaviour:
       customIcon: 
       autoIconDirty: 1
     - guid: 709f11a7f3c4041caa4ef136ea32d874
-      iColor: 0
+      iColor: 2
       autoIcon: 
-      customIcon: 
+      customIcon: ComputeShader Icon
       autoIconDirty: 0
     - guid: fb366c114ed04a8439078030b4d7c636
       iColor: 0
@@ -1361,9 +1361,9 @@ MonoBehaviour:
       customIcon: 
       autoIconDirty: 0
     - guid: ad5e70cc367362945a0029e26cc3f52b
-      iColor: 0
+      iColor: 3
       autoIcon: 
-      customIcon: 
+      customIcon: ScriptableObject Icon
       autoIconDirty: 0
     - guid: 5e26446a3df443747b44ccd9ec576b97
       iColor: 0
@@ -1376,19 +1376,19 @@ MonoBehaviour:
       customIcon: 
       autoIconDirty: 0
     - guid: 2a906f3c49a8a284ea3e122c3e0dec7e
-      iColor: 0
+      iColor: 4
       autoIcon: 
-      customIcon: 
+      customIcon: ScriptableObject Icon
       autoIconDirty: 0
     - guid: 98c6a969bfb8d374097bc27285f9086d
-      iColor: 0
+      iColor: 7
       autoIcon: 
-      customIcon: 
+      customIcon: Shader Icon
       autoIconDirty: 0
     - guid: 1af3368a750c4b540ba00acb1e7fc19f
-      iColor: 0
+      iColor: 8
       autoIcon: 
-      customIcon: 
+      customIcon: TextAsset Icon
       autoIconDirty: 0
     - guid: 6aba9f7e7912a8148b4a7cab4848738d
       iColor: 0
