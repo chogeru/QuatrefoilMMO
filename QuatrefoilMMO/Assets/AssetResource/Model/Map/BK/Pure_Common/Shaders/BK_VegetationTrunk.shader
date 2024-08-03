@@ -1,4 +1,4 @@
-// Made with Amplify Shader Editor v1.9.2.1
+// Made with Amplify Shader Editor v1.9.2
 // Available at the Unity Asset Store - http://u3d.as/y3X 
 Shader "BK/VegetationTrunk"
 {
@@ -212,7 +212,7 @@ Shader "BK/VegetationTrunk"
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 140004
+			#define ASE_SRP_VERSION 120110
 
 
 			#pragma shader_feature_local _RECEIVE_SHADOWS_OFF
@@ -229,7 +229,7 @@ Shader "BK/VegetationTrunk"
 			#pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
 			#pragma multi_compile_fragment _ _LIGHT_LAYERS
 			#pragma multi_compile_fragment _ _LIGHT_COOKIES
-			#pragma multi_compile _ _FORWARD_PLUS
+			#pragma multi_compile _ _CLUSTERED_RENDERING
 
 			#pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
 			#pragma multi_compile _ SHADOWS_SHADOWMASK
@@ -237,7 +237,6 @@ Shader "BK/VegetationTrunk"
 			#pragma multi_compile _ LIGHTMAP_ON
 			#pragma multi_compile _ DYNAMICLIGHTMAP_ON
 			#pragma multi_compile_fragment _ DEBUG_DISPLAY
-			#pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
 
 			#pragma vertex vert
 			#pragma fragment frag
@@ -254,10 +253,6 @@ Shader "BK/VegetationTrunk"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DBuffer.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
-
-			#if defined(LOD_FADE_CROSSFADE)
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
-            #endif
 
 			#if defined(UNITY_INSTANCING_ENABLED) && defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL)
 				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
@@ -358,10 +353,12 @@ Shader "BK/VegetationTrunk"
 			#endif
 			CBUFFER_END
 
+			// Property used by ScenePickingPass
 			#ifdef SCENEPICKINGPASS
 				float4 _SelectionID;
 			#endif
 
+			// Properties used by SceneSelectionPass
 			#ifdef SCENESELECTIONPASS
 				int _ObjectId;
 				int _PassValue;
@@ -379,6 +376,13 @@ Shader "BK/VegetationTrunk"
 			sampler2D _MetallicROcclusionGSmoothnessA;
 			sampler2D _DetailMetallicGlossMap;
 
+
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/PBRForwardPass.hlsl"
+
+			//#ifdef HAVE_VFX_MODIFICATION
+			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
+			//#endif
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
 			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -602,16 +606,13 @@ Shader "BK/VegetationTrunk"
 						#ifdef ASE_DEPTH_WRITE_ON
 						,out float outputDepth : ASE_SV_DEPTH
 						#endif
-						#ifdef _WRITE_RENDERING_LAYERS
-						, out float4 outRenderingLayers : SV_Target1
-						#endif
 						 ) : SV_Target
 			{
 				UNITY_SETUP_INSTANCE_ID(IN);
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
 
 				#ifdef LOD_FADE_CROSSFADE
-					LODFadeCrossFade( IN.clipPos );
+					LODDitheringTransition( IN.clipPos.xyz, unity_LODFade.x );
 				#endif
 
 				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
@@ -809,40 +810,23 @@ Shader "BK/VegetationTrunk"
 				{
 					float shadow = _TransmissionShadow;
 
-					#define SUM_LIGHT_TRANSMISSION(Light)\
-						float3 atten = Light.color * Light.distanceAttenuation;\
-						atten = lerp( atten, atten * Light.shadowAttenuation, shadow );\
-						half3 transmission = max( 0, -dot( inputData.normalWS, Light.direction ) ) * atten * Transmission;\
-						color.rgb += BaseColor * transmission;
+					Light mainLight = GetMainLight( inputData.shadowCoord );
+					float3 mainAtten = mainLight.color * mainLight.distanceAttenuation;
+					mainAtten = lerp( mainAtten, mainAtten * mainLight.shadowAttenuation, shadow );
+					half3 mainTransmission = max(0 , -dot(inputData.normalWS, mainLight.direction)) * mainAtten * Transmission;
+					color.rgb += BaseColor * mainTransmission;
 
-					SUM_LIGHT_TRANSMISSION( GetMainLight( inputData.shadowCoord ) );
+					#ifdef _ADDITIONAL_LIGHTS
+						int transPixelLightCount = GetAdditionalLightsCount();
+						for (int i = 0; i < transPixelLightCount; ++i)
+						{
+							Light light = GetAdditionalLight(i, inputData.positionWS);
+							float3 atten = light.color * light.distanceAttenuation;
+							atten = lerp( atten, atten * light.shadowAttenuation, shadow );
 
-					#if defined(_ADDITIONAL_LIGHTS)
-						uint meshRenderingLayers = GetMeshRenderingLayer();
-						uint pixelLightCount = GetAdditionalLightsCount();
-						#if USE_FORWARD_PLUS
-							for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); lightIndex++)
-							{
-								FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
-
-								Light light = GetAdditionalLight(lightIndex, inputData.positionWS);
-								#ifdef _LIGHT_LAYERS
-								if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
-								#endif
-								{
-									SUM_LIGHT_TRANSMISSION( light );
-								}
-							}
-						#endif
-						LIGHT_LOOP_BEGIN( pixelLightCount )
-							Light light = GetAdditionalLight(lightIndex, inputData.positionWS);
-							#ifdef _LIGHT_LAYERS
-							if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
-							#endif
-							{
-								SUM_LIGHT_TRANSMISSION( light );
-							}
-						LIGHT_LOOP_END
+							half3 transmission = max(0 , -dot(inputData.normalWS, light.direction)) * atten * Transmission;
+							color.rgb += BaseColor * transmission;
+						}
 					#endif
 				}
 				#endif
@@ -856,42 +840,28 @@ Shader "BK/VegetationTrunk"
 					float ambient = _TransAmbient;
 					float strength = _TransStrength;
 
-					#define SUM_LIGHT_TRANSLUCENCY(Light)\
-						float3 atten = Light.color * Light.distanceAttenuation;\
-						atten = lerp( atten, atten * Light.shadowAttenuation, shadow );\
-						half3 lightDir = Light.direction + inputData.normalWS * normal;\
-						half VdotL = pow( saturate( dot( inputData.viewDirectionWS, -lightDir ) ), scattering );\
-						half3 translucency = atten * ( VdotL * direct + inputData.bakedGI * ambient ) * Translucency;\
-						color.rgb += BaseColor * translucency * strength;
+					Light mainLight = GetMainLight( inputData.shadowCoord );
+					float3 mainAtten = mainLight.color * mainLight.distanceAttenuation;
+					mainAtten = lerp( mainAtten, mainAtten * mainLight.shadowAttenuation, shadow );
 
-					SUM_LIGHT_TRANSLUCENCY( GetMainLight( inputData.shadowCoord ) );
+					half3 mainLightDir = mainLight.direction + inputData.normalWS * normal;
+					half mainVdotL = pow( saturate( dot( inputData.viewDirectionWS, -mainLightDir ) ), scattering );
+					half3 mainTranslucency = mainAtten * ( mainVdotL * direct + inputData.bakedGI * ambient ) * Translucency;
+					color.rgb += BaseColor * mainTranslucency * strength;
 
-					#if defined(_ADDITIONAL_LIGHTS)
-						uint meshRenderingLayers = GetMeshRenderingLayer();
-						uint pixelLightCount = GetAdditionalLightsCount();
-						#if USE_FORWARD_PLUS
-							for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); lightIndex++)
-							{
-								FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
+					#ifdef _ADDITIONAL_LIGHTS
+						int transPixelLightCount = GetAdditionalLightsCount();
+						for (int i = 0; i < transPixelLightCount; ++i)
+						{
+							Light light = GetAdditionalLight(i, inputData.positionWS);
+							float3 atten = light.color * light.distanceAttenuation;
+							atten = lerp( atten, atten * light.shadowAttenuation, shadow );
 
-								Light light = GetAdditionalLight(lightIndex, inputData.positionWS);
-								#ifdef _LIGHT_LAYERS
-								if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
-								#endif
-								{
-									SUM_LIGHT_TRANSLUCENCY( light );
-								}
-							}
-						#endif
-						LIGHT_LOOP_BEGIN( pixelLightCount )
-							Light light = GetAdditionalLight(lightIndex, inputData.positionWS);
-							#ifdef _LIGHT_LAYERS
-							if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
-							#endif
-							{
-								SUM_LIGHT_TRANSLUCENCY( light );
-							}
-						LIGHT_LOOP_END
+							half3 lightDir = light.direction + inputData.normalWS * normal;
+							half VdotL = pow( saturate( dot( inputData.viewDirectionWS, -lightDir ) ), scattering );
+							half3 translucency = atten * ( VdotL * direct + inputData.bakedGI * ambient ) * Translucency;
+							color.rgb += BaseColor * translucency * strength;
+						}
 					#endif
 				}
 				#endif
@@ -921,11 +891,6 @@ Shader "BK/VegetationTrunk"
 					outputDepth = DepthValue;
 				#endif
 
-				#ifdef _WRITE_RENDERING_LAYERS
-					uint renderingLayers = GetMeshRenderingLayer();
-					outRenderingLayers = float4( EncodeMeshRenderingLayer( renderingLayers ), 0, 0, 0 );
-				#endif
-
 				return color;
 			}
 
@@ -951,7 +916,7 @@ Shader "BK/VegetationTrunk"
 			#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
 			#define ASE_FOG 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 140004
+			#define ASE_SRP_VERSION 120110
 
 
 			#pragma vertex vert
@@ -969,10 +934,6 @@ Shader "BK/VegetationTrunk"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
-
-			#if defined(LOD_FADE_CROSSFADE)
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
-            #endif
 
 			
 
@@ -1055,10 +1016,12 @@ Shader "BK/VegetationTrunk"
 			#endif
 			CBUFFER_END
 
+			// Property used by ScenePickingPass
 			#ifdef SCENEPICKINGPASS
 				float4 _SelectionID;
 			#endif
 
+			// Properties used by SceneSelectionPass
 			#ifdef SCENESELECTIONPASS
 				int _ObjectId;
 				int _PassValue;
@@ -1070,6 +1033,13 @@ Shader "BK/VegetationTrunk"
 			float WindBurstsScale;
 			float WindBurstsPower;
 
+
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShadowCasterPass.hlsl"
+
+			//#ifdef HAVE_VFX_MODIFICATION
+			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
+			//#endif
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
 			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -1304,7 +1274,7 @@ Shader "BK/VegetationTrunk"
 				#endif
 
 				#ifdef LOD_FADE_CROSSFADE
-					LODFadeCrossFade( IN.clipPos );
+					LODDitheringTransition( IN.clipPos.xyz, unity_LODFade.x );
 				#endif
 
 				#ifdef ASE_DEPTH_WRITE_ON
@@ -1334,7 +1304,7 @@ Shader "BK/VegetationTrunk"
 			#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
 			#define ASE_FOG 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 140004
+			#define ASE_SRP_VERSION 120110
 
 
 			#pragma vertex vert
@@ -1350,10 +1320,6 @@ Shader "BK/VegetationTrunk"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
-			
-			#if defined(LOD_FADE_CROSSFADE)
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
-            #endif
 
 			
 
@@ -1436,10 +1402,12 @@ Shader "BK/VegetationTrunk"
 			#endif
 			CBUFFER_END
 
+			// Property used by ScenePickingPass
 			#ifdef SCENEPICKINGPASS
 				float4 _SelectionID;
 			#endif
 
+			// Properties used by SceneSelectionPass
 			#ifdef SCENESELECTIONPASS
 				int _ObjectId;
 				int _PassValue;
@@ -1451,6 +1419,13 @@ Shader "BK/VegetationTrunk"
 			float WindBurstsScale;
 			float WindBurstsPower;
 
+
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/DepthOnlyPass.hlsl"
+
+			//#ifdef HAVE_VFX_MODIFICATION
+			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
+			//#endif
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
 			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -1661,7 +1636,7 @@ Shader "BK/VegetationTrunk"
 				#endif
 
 				#ifdef LOD_FADE_CROSSFADE
-					LODFadeCrossFade( IN.clipPos );
+					LODDitheringTransition( IN.clipPos.xyz, unity_LODFade.x );
 				#endif
 
 				#ifdef ASE_DEPTH_WRITE_ON
@@ -1687,7 +1662,7 @@ Shader "BK/VegetationTrunk"
 			#define _NORMAL_DROPOFF_TS 1
 			#define ASE_FOG 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 140004
+			#define ASE_SRP_VERSION 120110
 
 
 			#pragma vertex vert
@@ -1792,10 +1767,12 @@ Shader "BK/VegetationTrunk"
 			#endif
 			CBUFFER_END
 
+			// Property used by ScenePickingPass
 			#ifdef SCENEPICKINGPASS
 				float4 _SelectionID;
 			#endif
 
+			// Properties used by SceneSelectionPass
 			#ifdef SCENESELECTIONPASS
 				int _ObjectId;
 				int _PassValue;
@@ -1811,6 +1788,13 @@ Shader "BK/VegetationTrunk"
 			sampler2D _BumpMap;
 			sampler2D _LayerNormalMap;
 
+
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/LightingMetaPass.hlsl"
+
+			//#ifdef HAVE_VFX_MODIFICATION
+			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
+			//#endif
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
 			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -2109,7 +2093,7 @@ Shader "BK/VegetationTrunk"
 			#define _NORMAL_DROPOFF_TS 1
 			#define ASE_FOG 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 140004
+			#define ASE_SRP_VERSION 120110
 
 
 			#pragma vertex vert
@@ -2205,10 +2189,12 @@ Shader "BK/VegetationTrunk"
 			#endif
 			CBUFFER_END
 
+			// Property used by ScenePickingPass
 			#ifdef SCENEPICKINGPASS
 				float4 _SelectionID;
 			#endif
 
+			// Properties used by SceneSelectionPass
 			#ifdef SCENESELECTIONPASS
 				int _ObjectId;
 				int _PassValue;
@@ -2224,6 +2210,13 @@ Shader "BK/VegetationTrunk"
 			sampler2D _BumpMap;
 			sampler2D _LayerNormalMap;
 
+
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/PBR2DPass.hlsl"
+
+			//#ifdef HAVE_VFX_MODIFICATION
+			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
+			//#endif
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
 			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -2503,13 +2496,11 @@ Shader "BK/VegetationTrunk"
 			#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
 			#define ASE_FOG 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 140004
+			#define ASE_SRP_VERSION 120110
 
 
 			#pragma vertex vert
 			#pragma fragment frag
-
-			#pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
 
 			#define SHADERPASS SHADERPASS_DEPTHNORMALSONLY
 
@@ -2521,10 +2512,6 @@ Shader "BK/VegetationTrunk"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
-
-			#if defined(LOD_FADE_CROSSFADE)
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
-            #endif
 
 			#define ASE_NEEDS_FRAG_WORLD_TANGENT
 			#define ASE_NEEDS_FRAG_WORLD_NORMAL
@@ -2617,10 +2604,12 @@ Shader "BK/VegetationTrunk"
 			#endif
 			CBUFFER_END
 
+			// Property used by ScenePickingPass
 			#ifdef SCENEPICKINGPASS
 				float4 _SelectionID;
 			#endif
 
+			// Properties used by SceneSelectionPass
 			#ifdef SCENESELECTIONPASS
 				int _ObjectId;
 				int _PassValue;
@@ -2634,6 +2623,13 @@ Shader "BK/VegetationTrunk"
 			sampler2D _BumpMap;
 			sampler2D _LayerNormalMap;
 
+
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/DepthNormalsOnlyPass.hlsl"
+
+			//#ifdef HAVE_VFX_MODIFICATION
+			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
+			//#endif
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
 			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -2828,15 +2824,11 @@ Shader "BK/VegetationTrunk"
 			}
 			#endif
 
-			void frag(	VertexOutput IN
-						, out half4 outNormalWS : SV_Target0
+			half4 frag(	VertexOutput IN
 						#ifdef ASE_DEPTH_WRITE_ON
 						,out float outputDepth : ASE_SV_DEPTH
 						#endif
-						#ifdef _WRITE_RENDERING_LAYERS
-						, out float4 outRenderingLayers : SV_Target1
-						#endif
-						 )
+						 ) : SV_TARGET
 			{
 				UNITY_SETUP_INSTANCE_ID(IN);
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( IN );
@@ -2901,7 +2893,7 @@ Shader "BK/VegetationTrunk"
 				#endif
 
 				#ifdef LOD_FADE_CROSSFADE
-					LODFadeCrossFade( IN.clipPos );
+					LODDitheringTransition( IN.clipPos.xyz, unity_LODFade.x );
 				#endif
 
 				#ifdef ASE_DEPTH_WRITE_ON
@@ -2912,7 +2904,7 @@ Shader "BK/VegetationTrunk"
 					float2 octNormalWS = PackNormalOctQuadEncode(WorldNormal);
 					float2 remappedOctNormalWS = saturate(octNormalWS * 0.5 + 0.5);
 					half3 packedNormalWS = PackFloat2To888(remappedOctNormalWS);
-					outNormalWS = half4(packedNormalWS, 0.0);
+					return half4(packedNormalWS, 0.0);
 				#else
 					#if defined(_NORMALMAP)
 						#if _NORMAL_DROPOFF_TS
@@ -2927,12 +2919,7 @@ Shader "BK/VegetationTrunk"
 					#else
 						float3 normalWS = WorldNormal;
 					#endif
-					outNormalWS = half4(NormalizeNormalPerPixel(normalWS), 0.0);
-				#endif
-
-				#ifdef _WRITE_RENDERING_LAYERS
-					uint renderingLayers = GetMeshRenderingLayer();
-					outRenderingLayers = float4( EncodeMeshRenderingLayer( renderingLayers ), 0, 0, 0 );
+					return half4(NormalizeNormalPerPixel(normalWS), 0.0);
 				#endif
 			}
 			ENDHLSL
@@ -2961,7 +2948,7 @@ Shader "BK/VegetationTrunk"
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 140004
+			#define ASE_SRP_VERSION 120110
 
 
 			#pragma shader_feature_local _RECEIVE_SHADOWS_OFF
@@ -2973,6 +2960,7 @@ Shader "BK/VegetationTrunk"
 			#pragma multi_compile_fragment _ _REFLECTION_PROBE_BOX_PROJECTION
 			#pragma multi_compile_fragment _ _SHADOWS_SOFT
 			#pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
+			#pragma multi_compile_fragment _ _LIGHT_LAYERS
 			#pragma multi_compile_fragment _ _RENDER_PASS_ENABLED
 
 			#pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
@@ -2981,7 +2969,6 @@ Shader "BK/VegetationTrunk"
 			#pragma multi_compile _ LIGHTMAP_ON
 			#pragma multi_compile _ DYNAMICLIGHTMAP_ON
 			#pragma multi_compile_fragment _ _GBUFFER_NORMALS_OCT
-			#pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
 
 			#pragma vertex vert
 			#pragma fragment frag
@@ -2999,10 +2986,6 @@ Shader "BK/VegetationTrunk"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DBuffer.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
-			#if defined(LOD_FADE_CROSSFADE)
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
-            #endif
-			
 			#if defined(UNITY_INSTANCING_ENABLED) && defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL)
 				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
@@ -3102,10 +3085,12 @@ Shader "BK/VegetationTrunk"
 			#endif
 			CBUFFER_END
 
+			// Property used by ScenePickingPass
 			#ifdef SCENEPICKINGPASS
 				float4 _SelectionID;
 			#endif
 
+			// Properties used by SceneSelectionPass
 			#ifdef SCENESELECTIONPASS
 				int _ObjectId;
 				int _PassValue;
@@ -3124,7 +3109,9 @@ Shader "BK/VegetationTrunk"
 			sampler2D _DetailMetallicGlossMap;
 
 
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/PBRGBufferPass.hlsl"
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
 			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -3348,7 +3335,7 @@ Shader "BK/VegetationTrunk"
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
 
 				#ifdef LOD_FADE_CROSSFADE
-					LODFadeCrossFade( IN.clipPos );
+					LODDitheringTransition( IN.clipPos.xyz, unity_LODFade.x );
 				#endif
 
 				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
@@ -3550,14 +3537,13 @@ Shader "BK/VegetationTrunk"
 			Tags { "LightMode"="SceneSelectionPass" }
 
 			Cull Off
-			AlphaToMask Off
 
 			HLSLPROGRAM
 
 			#define _NORMAL_DROPOFF_TS 1
 			#define ASE_FOG 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 140004
+			#define ASE_SRP_VERSION 120110
 
 
 			#pragma vertex vert
@@ -3644,10 +3630,12 @@ Shader "BK/VegetationTrunk"
 			#endif
 			CBUFFER_END
 
+			// Property used by ScenePickingPass
 			#ifdef SCENEPICKINGPASS
 				float4 _SelectionID;
 			#endif
 
+			// Properties used by SceneSelectionPass
 			#ifdef SCENESELECTIONPASS
 				int _ObjectId;
 				int _PassValue;
@@ -3659,6 +3647,13 @@ Shader "BK/VegetationTrunk"
 			float WindBurstsScale;
 			float WindBurstsPower;
 
+
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/SelectionPickingPass.hlsl"
+
+			//#ifdef HAVE_VFX_MODIFICATION
+			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
+			//#endif
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
 			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -3866,14 +3861,12 @@ Shader "BK/VegetationTrunk"
 			Name "ScenePickingPass"
 			Tags { "LightMode"="Picking" }
 
-			AlphaToMask Off
-
 			HLSLPROGRAM
 
 			#define _NORMAL_DROPOFF_TS 1
 			#define ASE_FOG 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 140004
+			#define ASE_SRP_VERSION 120110
 
 
 			#pragma vertex vert
@@ -3960,10 +3953,12 @@ Shader "BK/VegetationTrunk"
 			#endif
 			CBUFFER_END
 
+			// Property used by ScenePickingPass
 			#ifdef SCENEPICKINGPASS
 				float4 _SelectionID;
 			#endif
 
+			// Properties used by SceneSelectionPass
 			#ifdef SCENESELECTIONPASS
 				int _ObjectId;
 				int _PassValue;
@@ -3975,6 +3970,13 @@ Shader "BK/VegetationTrunk"
 			float WindBurstsScale;
 			float WindBurstsPower;
 
+
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
+			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/SelectionPickingPass.hlsl"
+
+			//#ifdef HAVE_VFX_MODIFICATION
+			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
+			//#endif
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
 			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -4182,7 +4184,7 @@ Shader "BK/VegetationTrunk"
 	Fallback Off
 }
 /*ASEBEGIN
-Version=19201
+Version=19200
 Node;AmplifyShaderEditor.CommentaryNode;185;-3328,-768;Inherit;False;2150;847;;13;9;137;8;3;86;81;78;87;75;13;76;184;252;Normals;1,1,1,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;252;-3290.013,-344.379;Inherit;False;217;225;Layer Normal map;1;64;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;208;-3326.4,2304;Inherit;False;577.067;415.2998;;4;201;203;205;199;VertexColor;1,1,1,1;0;0
@@ -4267,11 +4269,11 @@ Node;AmplifyShaderEditor.RangedFloatNode;161;-1024,1536;Inherit;False;Property;_
 Node;AmplifyShaderEditor.SaturateNode;177;-1696,1968;Inherit;False;1;0;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RangedFloatNode;134;-2352,2080;Inherit;False;Property;_WindTrunkContrast;Wind Trunk Contrast;25;0;Create;True;0;0;0;False;0;False;10;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleTimeNode;121;-3264,1280;Inherit;False;1;0;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;126;-3264,1408;Inherit;False;Global;WindSpeed;Wind Speed;21;0;Create;True;0;0;0;False;1;Space(10);False;1;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;126;-3264,1408;Inherit;False;Global;WindSpeed;Wind Speed;21;0;Create;True;0;0;0;False;1;Space(10);False;1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;251;-3040,1344;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SinOpNode;116;-2816,1216;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.CosOpNode;115;-2816,1472;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;128;-2816,1344;Inherit;False;Global;WindPower;Wind Power;22;0;Create;True;0;0;0;False;0;False;0.01;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;128;-2816,1344;Inherit;False;Global;WindPower;Wind Power;22;0;Create;True;0;0;0;False;0;False;0.01;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;125;-2176,1216;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;117;-2176,1536;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;114;-2368,1568;Inherit;False;Constant;_Float8;Float 8;18;0;Create;True;0;0;0;False;0;False;0.5;0;0;0;0;1;FLOAT;0
@@ -4300,12 +4302,12 @@ Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;266;192,-1665;Float;False;F
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;267;192,-1665;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=Universal2D;False;False;0;;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;268;192,-1665;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=DepthNormals;False;False;0;;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;269;192,-1665;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalGBuffer;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;270;192,-1665;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;SceneSelectionPass;0;8;SceneSelectionPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=SceneSelectionPass;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;271;192,-1665;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ScenePickingPass;0;9;ScenePickingPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Picking;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;270;192,-1665;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;SceneSelectionPass;0;8;SceneSelectionPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=SceneSelectionPass;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;271;192,-1665;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ScenePickingPass;0;9;ScenePickingPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Picking;False;False;0;;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.PowerNode;220;-2160,-2528;Inherit;False;True;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.PowerNode;221;-2160,-2416;Inherit;False;True;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.PowerNode;244;-1664,-2080;Inherit;False;True;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;261;-2816,1600;Inherit;False;BK_Wind;-1;;1;511f08b81f352dd4e9774d4c87a1b504;0;0;2;FLOAT3;56;FLOAT;57
+Node;AmplifyShaderEditor.FunctionNode;261;-2816,1600;Inherit;False;BK_Wind;-1;;1;26d8854d92f3df14c80399321e9d26d1;0;0;2;FLOAT3;56;FLOAT;57
 Node;AmplifyShaderEditor.PowerNode;131;-2112,1904;Inherit;False;True;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.PowerNode;24;-960,384;Inherit;True;True;2;0;COLOR;0,0,0,0;False;1;FLOAT;1;False;1;COLOR;0
 Node;AmplifyShaderEditor.PowerNode;109;-3072,448;Inherit;True;True;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
@@ -4425,4 +4427,4 @@ WireConnection;24;1;25;0
 WireConnection;109;0;207;0
 WireConnection;109;1;110;0
 ASEEND*/
-//CHKSM=5252FE785A80079465844D312EC291F4FF45780D
+//CHKSM=46E5C77D551221CF79E7E302B1C4C2978F45C873
