@@ -60,7 +60,7 @@ namespace RLD
 
         private void ConvertScene(DynamicConvertSettings settings)
         {
-            var activeScene = SceneManager.GetActiveScene();
+            var activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
             if (activeScene.rootCount == 0) return;
 
             var sceneRoots = new List<GameObject>(activeScene.rootCount);

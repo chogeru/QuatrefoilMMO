@@ -76,9 +76,9 @@ namespace RLD
 
         public AABB CalculateBounds()
         {
-            var activeScene = SceneManager.GetActiveScene();
+            var activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
             var roots = new List<GameObject>(Mathf.Max(10, activeScene.rootCount));
-            SceneManager.GetActiveScene().GetRootGameObjects(roots);
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects(roots);
 
             var boundsQConfig = ObjectBounds.DefaultQConfig;
             boundsQConfig.NoVolumeSize = Vector3.zero;
@@ -303,7 +303,7 @@ namespace RLD
 
         public void Update_SystemCall()
         {
-            Scene activeScene = SceneManager.GetActiveScene();
+            Scene activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
             int numRoots = activeScene.rootCount;
             if (_rootGameObjects.Capacity <= numRoots) _rootGameObjects.Capacity = numRoots + 100;
             activeScene.GetRootGameObjects(_rootGameObjects);
