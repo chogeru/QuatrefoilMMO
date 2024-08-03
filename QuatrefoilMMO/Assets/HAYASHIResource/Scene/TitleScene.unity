@@ -22172,7 +22172,7 @@ MonoBehaviour:
       enabled: 1
       filterType: 0
       weight: 1
-      range: {x: 116.25, y: 19.25}
+      range: {x: 117.75, y: 19.25}
       smoothness: {x: 1, y: 1}
       noise:
         noiseType: 0
