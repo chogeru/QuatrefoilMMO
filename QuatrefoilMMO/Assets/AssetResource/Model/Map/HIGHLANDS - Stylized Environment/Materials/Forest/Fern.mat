@@ -119,7 +119,7 @@ Material:
     - _LockbyVcoordinates: 1
     - _Metallic: 0
     - _Mode: 0
-    - _NormalScale: 1
+    - _NormalScale: 15
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueControl: 0
@@ -156,6 +156,6 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MainColor: {r: 0, g: 0.41354612, b: 0.595, a: 0}
+    - _MainColor: {r: 0.04043546, g: 0.4433962, b: 0.10936298, a: 0}
     - _SecondColor: {r: 0.29800004, g: 1, b: 0.7139999, a: 0}
   m_BuildTextureStacks: []

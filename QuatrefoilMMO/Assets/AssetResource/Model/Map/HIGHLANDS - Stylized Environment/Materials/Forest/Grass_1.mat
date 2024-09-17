@@ -100,7 +100,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaCutoff: 0.3
+    - _AlphaCutoff: 0.5
     - _Anchorthefoliagebase: 1
     - _BumpScale: 1
     - _Color2Enable: 1
@@ -123,7 +123,7 @@ Material:
     - _LockbyVcoordinates: 1
     - _Metallic: 0
     - _Mode: 0
-    - _NormalScale: 1
+    - _NormalScale: 50
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueControl: 0
@@ -163,6 +163,6 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MainColor: {r: 0.1382353, g: 0.44097063, b: 0.5529412, a: 0}
-    - _SecondColor: {r: 0.5469052, g: 0.80784315, b: 0, a: 0}
+    - _MainColor: {r: 0.13053277, g: 0.5188679, b: 0.13302213, a: 0}
+    - _SecondColor: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

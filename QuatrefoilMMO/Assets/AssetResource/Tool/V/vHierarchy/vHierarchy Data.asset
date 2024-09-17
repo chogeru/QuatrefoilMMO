@@ -15,7 +15,17 @@ MonoBehaviour:
   sceneDatas_byGuid:
     keys:
     - 8e1a89be01b92e94890fb2acd8e65195
+    - 7575e2efb1c02744a9c39544186bd06e
     values:
     - goDatas_byGlobalId:
         keys: []
         values: []
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-7575e2efb1c02744a9c39544186bd06e-1020790846-0
+        - globalObjectIdString: GlobalObjectId_V1-2-7575e2efb1c02744a9c39544186bd06e-1593469954-0
+        values:
+        - colorIndex: 5
+          iconNameOrGuid: 
+        - colorIndex: 8
+          iconNameOrGuid: 

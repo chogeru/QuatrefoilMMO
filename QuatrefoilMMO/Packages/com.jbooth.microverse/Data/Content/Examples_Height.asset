@@ -16,6 +16,7 @@ MonoBehaviour:
   author: Jason Booth
   packName: MicroVerse-Examples
   id: MicroVerse-Examples
+  renderPipeline: 0
   previewGradient: {fileID: 0}
   contents:
   - prefab: {fileID: 0}
@@ -46,3 +47,20 @@ MonoBehaviour:
     stamp: dae4187c1a743ab4c9ab33d534958ad5
     previewGradient: {fileID: 0}
     description: Drag into the world to modify heights
+  - prefab: {fileID: 5817642830203250485, guid: 93a718e75f2d3c0438aec2dcedf97801,
+      type: 3}
+    childPrefab: {fileID: 0}
+    previewImage: {fileID: 0}
+    previewAsset: {fileID: 0}
+    stamp: 
+    previewGradient: {fileID: 0}
+    description: 
+  - prefab: {fileID: 4195348849944317895, guid: cb38509473e75704aa4633c7cc5f1c01,
+      type: 3}
+    childPrefab: {fileID: 0}
+    previewImage: {fileID: 0}
+    previewAsset: {fileID: 0}
+    stamp: 
+    previewGradient: {fileID: 0}
+    description: 
+  systemConfig: {fileID: 0}

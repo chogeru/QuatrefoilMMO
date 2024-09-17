@@ -134,7 +134,7 @@ Material:
     - _TessellationMaxDistance: 50
     - _TessellationMinDistance: 5
     - _Tiling: 0.15
-    - _Transparency: 1.2
+    - _Transparency: 0.8
     - _TransparencyFade: 0.46
     - _Turbidity: 0
     - _TurbidityFade: 0.5
@@ -147,7 +147,7 @@ Material:
     - _WavesHeight: 1.09
     - _WavesNormalIntensity: 0.73
     - _WavesScale: 2
-    - _WavesSpeed: 0.15
+    - _WavesSpeed: 0.405
     - _WavesTile: 0.15
     - _ZWrite: 1
     - __dirty: 1
@@ -157,5 +157,5 @@ Material:
     - _Color2: {r: 1, g: 0.2880787, b: 0.2216981, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
-    - _WaterColor: {r: 0.1618394, g: 0.41515326, b: 0.482, a: 0}
+    - _WaterColor: {r: 0.17153195, g: 0.47534996, b: 0.5566038, a: 0}
   m_BuildTextureStacks: []

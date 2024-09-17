@@ -16,29 +16,47 @@ MonoBehaviour:
   author: Jason Booth
   packName: MicroVerse-Examples
   id: MicroVerse-Examples
+  renderPipeline: 0
   previewGradient: {fileID: 0}
   contents:
-  - prefab: {fileID: 3506825505083284256, guid: 74a37d56395974223b34ffdc91c67724, type: 3}
+  - prefab: {fileID: 3506825505083284256, guid: 74a37d56395974223b34ffdc91c67724,
+      type: 3}
+    childPrefab: {fileID: 0}
     previewImage: {fileID: 2800000, guid: e4cfdba350bdd4550b2521dbdfdedf41, type: 3}
     previewAsset: {fileID: 0}
     stamp: 
     previewGradient: {fileID: 0}
     description: A typical alpine mountain region texturing
-  - prefab: {fileID: 3372305136683577990, guid: 4ba3275cd41f24bf18fd139d5345f22e, type: 3}
+  - prefab: {fileID: 5809980058752639757, guid: cafcadd6f0e4609418286b9981de24a4,
+      type: 3}
+    childPrefab: {fileID: 0}
     previewImage: {fileID: 2800000, guid: ace7a3c59565afe4c80685e8ec18d6dd, type: 3}
     previewAsset: {fileID: 0}
     stamp: 
     previewGradient: {fileID: 0}
     description: Great for sand dunes
-  - prefab: {fileID: 6959698920476942823, guid: 63e84e38456f338488afce440e82eef2, type: 3}
+  - prefab: {fileID: 7237374359567648879, guid: a05840fe3f1e3304b8722f35787669e4,
+      type: 3}
+    childPrefab: {fileID: 0}
     previewImage: {fileID: 2800000, guid: 70d330cb2c8a4c44bb10e19530aefa78, type: 3}
     previewAsset: {fileID: 0}
     stamp: 
     previewGradient: {fileID: 0}
     description: A rocky, grassy area
-  - prefab: {fileID: 1482028615074373110, guid: 6d33ef2df20e03940a36ae2b51322db2, type: 3}
+  - prefab: {fileID: 8911036472412698693, guid: c8fb0bc032270eb45a382f1f67888602,
+      type: 3}
+    childPrefab: {fileID: 0}
     previewImage: {fileID: 2800000, guid: 0d9c0dc1c5d1a414c980339ce41f6452, type: 3}
     previewAsset: {fileID: 0}
     stamp: 
     previewGradient: {fileID: 0}
     description: A rocky wasteland
+  - prefab: {fileID: 7816962694399177422, guid: cdb89d961f9bb0146a233e9ce9e4e4b6,
+      type: 3}
+    childPrefab: {fileID: 0}
+    previewImage: {fileID: 0}
+    previewAsset: {fileID: 0}
+    stamp: 
+    previewGradient: {fileID: 0}
+    description: 
+  systemConfig: {fileID: 0}
