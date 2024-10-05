@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace StateMachineAI
+namespace RinneResourceStateMachineAI
 {
     /// <summary>
     /// ステートを持つオブジェクトの基底

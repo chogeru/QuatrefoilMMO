@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace StateMachineAI
+namespace RinneResourceStateMachineAI
 {
     public class Goblin_Idle : State<EnemyAI>
     {
-        float time;     //経過時間
+        float m_elapsedtime;        //経過時間
+        float m_cooltime;           //クールタイム
 
         //コンストラクタ
         public Goblin_Idle(EnemyAI owner) : base(owner) {}
@@ -15,21 +16,32 @@ namespace StateMachineAI
         {
             Debug.Log("Goblin_Idleを起動しました");
 
-            time = 0.0f;
+            //バトルアニメーション解除
+            owner.m_animator.SetBool("IsBattleMode_Enemy", false);
+
+            m_elapsedtime = 0.0f;
+            //1から5秒をランダム
+            m_cooltime = Random.Range(1.0f, 5.0f);
         }
 
         //このAIが起動中に常に実行(Updateと同義)
         public override void Stay()
         {
-            time += Time.deltaTime;
-
-            //３秒経過
-            if (time > 3.0f)
+            //プレイヤー発見
+            if(owner.m_enemyparameters.m_parameters.IsFlag)
+            {
+                //バトルモードに移行
+                owner.ChangeState(AIState.Battle_Mode);
+            }
+            
+            //クールタイム経過
+            if (m_elapsedtime > m_cooltime)
             {
                 //移動モードに変更
                 owner.ChangeState(AIState.Walk_Mode);
             }
-
+            //経過時間処理
+            m_elapsedtime += Time.deltaTime;
         }
 
         //このAIが終了した瞬間に実行

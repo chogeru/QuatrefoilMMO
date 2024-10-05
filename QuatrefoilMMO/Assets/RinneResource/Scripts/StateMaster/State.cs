@@ -1,8 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace StateMachineAI
+namespace RinneResourceStateMachineAI
 {
     /// <summary>
     /// ステートの受け皿

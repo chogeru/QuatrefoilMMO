@@ -1,4 +1,4 @@
-namespace StateMachineAI
+namespace RinneResourceStateMachineAI
 {
     /// <summary>
     /// ステートマシン
