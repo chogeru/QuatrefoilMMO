@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HostType: 1
   HostProtocol: 0
-  AuthID: 
+  AuthID: 33534f9a-ecd9-4174-89f5-ac6434f49884-39214cdd
   SelfServerAddress: 
   m_SelfServerPortString: 
   m_SelfServerPort: 0
   MunCloudEndpointAddress: 
   MunCloudAppID: 
   MunCloudConnectionTimeOut: 20000
-  EnableAutoJoinLobby: 0
+  EnableAutoJoinLobby: 1
   EnableLobbyStatistics: 0
   CustomAuthType: 0
   CustomAuth_IgnoreError: 0

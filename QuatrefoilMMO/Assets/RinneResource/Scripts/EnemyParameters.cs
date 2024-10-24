@@ -40,7 +40,7 @@ public class EnemyParameters : MonoBehaviour
     }
 
     //攻撃ヒット時の処理
-    void AttackHit(float ATK)
+    public void AttackHit(float ATK)
     {
         m_parameters.HP = m_parameters.HP - ATK;
     }

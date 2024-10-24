@@ -1,6 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AbubuResouse.Log;
+
+/// <summary>
+/// ゴブリンの移動状態クラス
+/// </summary>
 
 namespace RinneResourceStateMachineAI
 {
@@ -12,7 +17,7 @@ namespace RinneResourceStateMachineAI
         //このAIが起動した瞬間に実行(Startと同義)
         public override void Enter()
         {
-            Debug.Log("Goblin_Walkを起動しました");
+            DebugUtility.Log("Goblin_Walkを起動しました");
             //歩きアニメーション起動
             owner.m_animator.SetBool("IsWalk_Enemy", true);
             //ナビゲーション開始
@@ -50,7 +55,7 @@ namespace RinneResourceStateMachineAI
             owner.m_animator.SetBool("IsWalk_Enemy", false);
             //ナビゲーション終了
             owner.m_agent.isStopped = true;
-            Debug.Log("Goblin_Walkを終了しました");
+            DebugUtility.Log("Goblin_Walkを終了しました");
         }
     }
 }

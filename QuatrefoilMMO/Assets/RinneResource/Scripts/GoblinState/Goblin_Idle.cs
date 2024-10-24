@@ -1,6 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AbubuResouse.Log;
+
+/// <summary>
+///ゴブリンの通常状態クラス 
+/// </summary>
 
 namespace RinneResourceStateMachineAI
 {
@@ -14,7 +19,7 @@ namespace RinneResourceStateMachineAI
         //このAIが起動した瞬間に実行(Startと同義)
         public override void Enter()
         {
-            Debug.Log("Goblin_Idleを起動しました");
+            DebugUtility.Log("Goblin_Idleを起動しました");
 
             //バトルアニメーション解除
             owner.m_animator.SetBool("IsBattleMode_Enemy", false);
@@ -28,12 +33,11 @@ namespace RinneResourceStateMachineAI
         public override void Stay()
         {
             //プレイヤー発見
-            if(owner.m_enemyparameters.m_parameters.IsFlag)
+            if (owner.m_enemyparameters.m_parameters.IsFlag)
             {
-                //バトルモードに移行
+                //バトルモードに変更
                 owner.ChangeState(AIState.Battle_Mode);
             }
-            
             //クールタイム経過
             if (m_elapsedtime > m_cooltime)
             {
@@ -47,7 +51,7 @@ namespace RinneResourceStateMachineAI
         //このAIが終了した瞬間に実行
         public override void Exit()
         {
-            Debug.Log("Goblin_Idleを終了しました");
+            DebugUtility.Log("Goblin_Idleを終了しました");
         }
     }
 }

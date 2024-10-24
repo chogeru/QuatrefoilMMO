@@ -1,6 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AbubuResouse.Log;
+
+/// <summary>
+/// ゴブリンの追尾状態クラス
+/// </summary>
 
 namespace RinneResourceStateMachineAI
 {
@@ -10,7 +15,7 @@ namespace RinneResourceStateMachineAI
 
         public override void Enter()
         {
-            Debug.Log("Goblin_Chaseを起動しました");
+            DebugUtility.Log("Goblin_Chaseを起動しました");
             //移動スピード
             owner.m_agent.speed *= 1.5f;
             //ナビゲーション開始
@@ -28,20 +33,33 @@ namespace RinneResourceStateMachineAI
             owner.m_agent.SetDestination(owner.m_targetplayer.transform.position);
             
             //攻撃の間合いに入ったら
-            if(targetLength < 4.0f)
+            if(targetLength < 2f)
             {
                 //攻撃ステートに切り替え
                 owner.ChangeState(AIState.Attack_Mode);
+            }
+
+            //あまりに距離が離れたら戦わない
+            if (targetLength > 20)
+            {
+                //通常状態へ変更
+                owner.ChangeState(AIState.Idle_Mode);
+                //未発見状態に変更
+                owner.m_enemyparameters.m_parameters.IsFlag = false;
             }
         }
 
         public override void Exit()
         {
-            Debug.Log("Goblin_Chaseを終了しました");
+            DebugUtility.Log("Goblin_Chaseを終了しました");
             //ナビゲーション終了
             owner.m_agent.isStopped = true;
+            //スピードを戻す
+            owner.m_agent.speed /= 1.5f;
             //チェイスアニメーション終了
             owner.m_animator.SetBool("IsRun_Enemy", false);
+            //検知フラグオフ
+            owner.m_enemyparameters.m_parameters.IsFlag = false;
         }
     }
 }

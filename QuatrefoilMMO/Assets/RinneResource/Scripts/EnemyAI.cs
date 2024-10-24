@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEditor;
+using AbubuResouse.Log;
 
 using System.Linq;
 using System.Text;
@@ -17,7 +18,8 @@ namespace RinneResourceStateMachineAI
         Walk_Mode,
         Battle_Mode,
         Chase_Mode,
-        Attack_Mode
+        Attack_Mode,
+        Lost_Mode
     }
 
     public class EnemyAI
@@ -37,10 +39,12 @@ namespace RinneResourceStateMachineAI
         public Enemyeye m_eye;
         //ターゲットプレイヤー
         public GameObject m_targetplayer;
-        //ターゲットとの距離
-        //public float m_targetlength;
+        //UI
+        public GameObject m_ui;
         //首
         public Transform m_neck;
+        //当たり判定コリジョン
+        public GameObject m_hitbox;
 
         private void Start()
         {
@@ -59,7 +63,10 @@ namespace RinneResourceStateMachineAI
             //オブジェクトの首を取得
             //m_neck = animator.GetBoneTransform(HumanBodyBones.Neck);
 
-
+            //初回起動時は攻撃用当たり判定をオフにする
+            m_hitbox.SetActive(false);
+            //発見時のUIをオフにする
+            m_ui.SetActive(false);
             //ステートマシーンを自身として設定
             stateMachine = new StateMachine<EnemyAI>();
 
@@ -81,14 +88,14 @@ namespace RinneResourceStateMachineAI
                 // クラスが見つからなかった場合の対処
                 if (StateType == null)
                 {
-                    Debug.LogError($"{ClassName} クラスが見つかりませんでした。");
+                    DebugUtility.LogError($"{ClassName} クラスが見つかりませんでした。");
                     return true;
                 }
 
                 // 型が State<AITester> かどうかをチェック
                 if (!typeof(State<EnemyAI>).IsAssignableFrom(StateType))
                 {
-                    Debug.LogError($"{ClassName} は State<EnemyAI> 型ではありません。\nだからよ…止まるんじゃ…ねぇぞ…。");
+                    DebugUtility.LogError($"{ClassName} は State<EnemyAI> 型ではありません。\nだからよ…止まるんじゃ…ねぇぞ…。");
                     return true;
                 }
 
@@ -99,7 +106,7 @@ namespace RinneResourceStateMachineAI
 
                 if (Constructor == null)
                 {
-                    Debug.LogError($"{ClassName} のコンストラクタが見つかりませんでした。\nああ――今夜はこんなにも、月が綺麗だ――。");
+                    DebugUtility.LogError($"{ClassName} のコンストラクタが見つかりませんでした。\nああ――今夜はこんなにも、月が綺麗だ――。");
                     return true;
                 }
 
@@ -110,18 +117,18 @@ namespace RinneResourceStateMachineAI
                 {
                     // ステートリストに追加
                     stateList.Add(StateInstance);
-                    Debug.Log($"{ClassName} をステートリストに追加しました。");
+                    DebugUtility.Log($"{ClassName} をステートリストに追加しました。");
                     return true;
                 }
                 else
                 {
-                    Debug.LogError($"{ClassName} のインスタンス生成に失敗しました。みんな死ぬしかないじゃない!!");
+                    DebugUtility.LogError($"{ClassName} のインスタンス生成に失敗しました。みんな死ぬしかないじゃない!!");
                     return false;
                 }
             }
             catch (System.Exception ex)
             {
-                Debug.LogError($"エラーが発生しました。ありえんw: {ex.Message}");
+                DebugUtility.LogError($"エラーが発生しました。ありえんw: {ex.Message}");
                 return false;
             }
         }
