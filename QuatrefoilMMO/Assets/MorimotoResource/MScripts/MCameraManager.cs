@@ -37,16 +37,18 @@ public class MCameraManager : MonoBehaviour
     private float m_rotateAngleMaxX = 75f;
 
     [SerializeField]
+    private float m_lastCameraDist = -1f;
+
+    [SerializeField]
     private float m_zoomMin = 2f;
 
     [SerializeField]
     private float m_zoomMax = 11f;
 
     [SerializeField]
-    private float m_zoomSpeed = 0.1f;
+    private float m_zoomSpeed = 1f;
 
-    [SerializeField]
-    private float m_lastCameraDist = -1f;
+    private float m_zoom = 0f;
 
     public void Update()
     {
@@ -57,7 +59,9 @@ public class MCameraManager : MonoBehaviour
         ) * 10f;
 
         //拡大用マウススクロール
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        m_zoom = Input.GetAxis("Mouse ScrollWheel") * m_zoomSpeed;
+        m_parameter.distance -= m_zoom;
+        m_parameter.distance = Mathf.Clamp(m_parameter.distance, m_zoomMin, m_zoomMax);
 
         m_parameter.angles += diffAngles;
         m_parameter.angles.x = Mathf.Clamp(m_parameter.angles.x, m_rotateAngleMinX, m_rotateAngleMaxX);
