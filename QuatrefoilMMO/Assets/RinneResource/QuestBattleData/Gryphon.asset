@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b1ba7c883dfac448b30d9d24f64cfce, type: 3}
-  m_Name: Doragon
+  m_Name: Gryphon
   m_EditorClassIdentifier: 
-  m_name: "\u30C9\u30E9\u30B4\u30F3"
-  m_state: []
-  obj: {fileID: 0}
-  m_hp: 1000
+  m_name: "\u30B0\u30EA\u30D5\u30A9\u30F3"
+  m_state:
+  - Gryphon_Idle
+  - Gryphon_Walk
+  - Gryphon_Battle
+  obj: {fileID: 2496650077270763257, guid: 821bb07abf6fd804c863561bd1cc26fa, type: 3}

@@ -10,6 +10,10 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 
+/// <summary>
+/// 小型モンスター用AI
+/// </summary>
+
 namespace RinneResourceStateMachineAI
 {
     public enum AIState
@@ -66,7 +70,7 @@ namespace RinneResourceStateMachineAI
             //初回起動時は攻撃用当たり判定をオフにする
             m_hitbox.SetActive(false);
             //発見時のUIをオフにする
-            m_ui.SetActive(false);
+            if(m_ui != null) m_ui.SetActive(false);
             //ステートマシーンを自身として設定
             stateMachine = new StateMachine<EnemyAI>();
 
