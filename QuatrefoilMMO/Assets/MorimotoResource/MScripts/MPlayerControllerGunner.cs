@@ -17,6 +17,18 @@ public class MPlayerControllerGunner : MonoBehaviour
     [SerializeField]
     private float m_jumpPower = 20f;
 
+    //攻撃判定用オブジェクト
+    [SerializeField]
+    private GameObject m_attackHit = null;
+
+    //攻撃判定用ColliderCall
+    [SerializeField]
+    private MColliderCallReceiver m_attackHitCall = null;
+
+    //接地判定用ColliderCall
+    //[SerializeField]
+    //private ColliderCallReceiver m_footColliderCall = null;
+
     private float m_moveSpeed = 0f;
 
     private int m_isRunModeCnt = 1;
@@ -31,6 +43,8 @@ public class MPlayerControllerGunner : MonoBehaviour
     //移動用縦方向入力
     private float m_verticalKeyInput = 0f;
 
+    //攻撃中フラグ
+    bool m_isAttack = false;
     //接地フラグ
     bool m_isGround = false;
 
@@ -42,7 +56,16 @@ public class MPlayerControllerGunner : MonoBehaviour
         m_animator = GetComponent<Animator>();
         //Rigidbobyコンポーネントを取得
         m_rigidbody = GetComponent<Rigidbody>();
+        //攻撃判定用オブジェクトをオフにする
+        m_attackHit.SetActive(false);
         m_isRunModeCnt = 1;
+
+        //攻撃判定用コライダに衝突イベントのコールバックを設定
+        m_attackHitCall.TriggerEnterEvent.AddListener(OnAttackHitTriggerEnter);
+
+        ////FootSphereのイベント登録
+        //m_footColliderCall.TriggerStayEvent.AddListener(OnFootTriggerStay);
+        //m_footColliderCall.TriggerExitEvent.AddListener(OnFootTriggerExit);
     }
 
     //移動方向ベクトルを算出
@@ -59,11 +82,26 @@ public class MPlayerControllerGunner : MonoBehaviour
 
     private void Update()
     {
+        //左クリックで攻撃開始
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnAttackButtonClicked();
+        }
+
+        //Spaceキーでジャンプ
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OnJumpButtonClicked();
+        }
+
+        //攻撃中でなければ、//移動キー入力取得
         m_horizontalKeyInput = 0f;
         m_verticalKeyInput = 0f;
-
-        m_horizontalKeyInput = Input.GetAxis("Horizontal");
-        m_verticalKeyInput = Input.GetAxis("Vertical");
+        if (!m_isAttack)
+        {
+            m_horizontalKeyInput = Input.GetAxis("Horizontal");
+            m_verticalKeyInput = Input.GetAxis("Vertical");
+        }
 
         //Shift切り替え用
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -79,12 +117,6 @@ public class MPlayerControllerGunner : MonoBehaviour
                 m_isRunMode = false;
                 m_moveSpeed = m_moveWalkSpeed;
             }
-        }
-
-        //Spaceキーでジャンプ
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            OnJumpButtonClicked();
         }
 
         //移動キーが入力されているかどうか
@@ -132,9 +164,73 @@ public class MPlayerControllerGunner : MonoBehaviour
         m_rigidbody.AddForce(move - current, ForceMode.VelocityChange);
     }
 
+    //ジャンプボタンクリック時に呼び出されるコールバック
     public void OnJumpButtonClicked()
     {
+        //攻撃中はジャンプしない
+        if (m_isAttack) return;
+        //接地していなければ、ジャンプしない
+        //if (!m_isGround) return;
         m_rigidbody.AddForce(Vector3.up * m_jumpPower, ForceMode.Impulse);
     }
+
+    //攻撃判定用コライダのトリガーのEnterコールバック
+    public void OnAttackHitTriggerEnter(Collider col)
+    {
+
+        //2重にヒットしないように1度ヒットしたら
+        //攻撃判定用コライダをオフにする
+        //m_attackHit.SetActive(false);
+    }
+
+    //FootShereトリガーのStayコールバック
+    //private void OnFootTriggerStay(Collider col)
+    //{
+    //    if (col.gameObject.tag == "Ground")
+    //    {
+    //        m_isGround = true;
+    //        m_animator.SetBool("isGround", m_isGround);
+    //    }
+    //}
+
+    //FootSphereトリガーのExitコールバック
+    //private void OnFootTriggerExit(Collider col)
+    //{
+    //    if (col.gameObject.tag == "Ground")
+    //    {
+    //        m_isGround = false;
+    //        m_animator.SetBool("isGround", m_isGround);
+    //    }
+    //}
+
+    //攻撃ボタンクリック時に呼び出されるコールバック
+    public void OnAttackButtonClicked()
+    {
+        //接地していなければ、攻撃を開始しない
+        //if (!m_isGround) return;
+        //既に攻撃中の場合は、再度攻撃を開始しない
+        if (m_isAttack) return;
+        m_isAttack = true;
+
+        //攻撃用トリガーを起動
+        m_animator.SetTrigger("isAttack");
+    }
+
+    //攻撃アニメーションのヒット時のイベント関数
+    private void Anim_AttackHit()
+    {
+        //攻撃判定用オブジェクトをオンにする
+        m_attackHit.SetActive(true);
+    }
+
+    //攻撃アニメーションに終了時のイベント関数
+    private void Anim_AttackEnd()
+    {
+        //攻撃判定用オブジェクトをオフにする
+        m_attackHit.SetActive(false);
+        //攻撃終了
+        m_isAttack = false;
+    }
+
 }
 
