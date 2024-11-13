@@ -36,7 +36,7 @@ namespace RinneResourceStateMachineAI
         //リジッドボディーコンポーネント
         public Rigidbody m_rb;
         //敵のパラメーター
-        public EnemyParameters m_enemyparameters;
+        public Parameters m_parameters;
         //敵のスポーン
         public EnemySpawn m_enemyspawn;
         //視野判定処理
@@ -59,7 +59,7 @@ namespace RinneResourceStateMachineAI
             //リジッドボディーコンポーネント取得
             m_rb = GetComponent<Rigidbody>();
             //パラメータコンポーネント取得
-            m_enemyparameters = GetComponent<EnemyParameters>();
+            m_parameters = GetComponent<Parameters>();
             //敵ポップコンポーネント取得
             m_enemyspawn = GetComponentInParent<EnemySpawn>();
             //視野判定処理コンポーネント取得
