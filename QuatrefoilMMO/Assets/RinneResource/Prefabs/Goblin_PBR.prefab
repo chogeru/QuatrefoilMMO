@@ -2804,9 +2804,9 @@ GameObject:
   - component: {fileID: 8845424265005524896}
   - component: {fileID: 8845424265005524897}
   - component: {fileID: 8845424265005524902}
-  - component: {fileID: 5148030545993922655}
   - component: {fileID: 311166460752100456}
   - component: {fileID: 6931174025643176207}
+  - component: {fileID: 3027838538396258901}
   m_Layer: 0
   m_Name: Goblin_PBR
   m_TagString: Untagged
@@ -2908,31 +2908,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5148030545993922655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8845424265005524899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ff0bebd9daac3e49a603c6fdf929fb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_parameters:
-    type: "\u30B4\u30D6\u30EA\u30F3"
-    LV: 1
-    HP: 100
-    MP: 0
-    ATK: 50
-    DEF: 10
-    RES: 5
-    AGI: 2
-    EXP: 2
-    MaxDistance: 10
-    MaxAngle: 45
-    IsFlag: 0
 --- !u!114 &311166460752100456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2948,7 +2923,7 @@ MonoBehaviour:
   m_animator: {fileID: 0}
   m_agent: {fileID: 0}
   m_rb: {fileID: 0}
-  m_enemyparameters: {fileID: 0}
+  m_parameters: {fileID: 0}
   m_enemyspawn: {fileID: 0}
   m_eye: {fileID: 0}
   m_targetplayer: {fileID: 0}
@@ -2970,6 +2945,31 @@ MonoBehaviour:
   m_enemyai: {fileID: 311166460752100456}
   m_neckrotangle: 30
   m_neckrottime: 2
+--- !u!114 &3027838538396258901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8845424265005524899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbc89f6aefea7474e9cc735d88a9a4af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_status:
+    type: Enemy
+    LV: 1
+    HP: 100
+    MP: 0
+    ATK: 50
+    DEF: 0
+    RES: 0
+    AGI: 1
+    EXP: 0
+    MaxDistance: 0
+    MaxAngle: 0
+    IsFlag: 0
 --- !u!1 &8845424265005524903
 GameObject:
   m_ObjectHideFlags: 0

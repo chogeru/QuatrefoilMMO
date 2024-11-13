@@ -45,7 +45,7 @@ namespace RinneResourceStateMachineAI
                 //通常状態へ変更
                 owner.ChangeState(AIState.Idle_Mode);
                 //未発見状態に変更
-                owner.m_enemyparameters.m_parameters.IsFlag = false;
+                owner.m_parameters.m_status.IsFlag = false;
             }
         }
 
@@ -59,7 +59,7 @@ namespace RinneResourceStateMachineAI
             //チェイスアニメーション終了
             owner.m_animator.SetBool("IsRun_Enemy", false);
             //検知フラグオフ
-            owner.m_enemyparameters.m_parameters.IsFlag = false;
+            owner.m_parameters.m_status.IsFlag = false;
         }
     }
 }

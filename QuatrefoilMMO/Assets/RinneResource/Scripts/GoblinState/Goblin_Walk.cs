@@ -23,7 +23,7 @@ namespace RinneResourceStateMachineAI
             //ナビゲーション開始
             owner.m_agent.isStopped = false;
             //移動スピードを歩きスピードに変化
-            owner.m_agent.speed = owner.m_enemyparameters.m_parameters.AGI;
+            owner.m_agent.speed = owner.m_parameters.m_status.AGI;
             //目標移動地点
             target_point = new Vector3(Random.Range(-49.0f, 49.0f), owner.transform.position.y, Random.Range(-49.0f, 49.0f));
         }
@@ -32,7 +32,7 @@ namespace RinneResourceStateMachineAI
         public override void Stay()
         {
             //プレイヤー発見
-            if (owner.m_enemyparameters.m_parameters.IsFlag)
+            if (owner.m_parameters.m_status.IsFlag)
             {
                 //臨戦態勢に移行
                 owner.ChangeState(AIState.Battle_Mode);

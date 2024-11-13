@@ -33,7 +33,7 @@ namespace RinneResourceStateMachineAI
         public override void Stay()
         {
             //プレイヤー発見
-            if (owner.m_enemyparameters.m_parameters.IsFlag)
+            if (owner.m_parameters.m_status.IsFlag)
             {
                 //バトルモードに変更
                 owner.ChangeState(AIState.Battle_Mode);

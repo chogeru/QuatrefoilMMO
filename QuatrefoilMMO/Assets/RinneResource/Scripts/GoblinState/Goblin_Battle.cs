@@ -66,28 +66,28 @@ namespace RinneResourceStateMachineAI
                 //後ろに下がる
                 owner.m_animator.SetBool("IsBattleBack", true);
                 //移動処理
-                owner.transform.position -= owner.m_enemyparameters.m_parameters.AGI / 2 * owner.transform.forward * Time.deltaTime;
+                owner.transform.position -= owner.m_parameters.m_status.AGI / 2 * owner.transform.forward * Time.deltaTime;
             }
             else if(n == 2 && targetLength > 1.5f)
             {
                 //プレイヤーに近づく
                 owner.m_animator.SetBool("IsBattleForward", true);
                 //移動処理
-                owner.transform.position += owner.m_enemyparameters.m_parameters.AGI / 2 * owner.transform.forward * Time.deltaTime;
+                owner.transform.position += owner.m_parameters.m_status.AGI / 2 * owner.transform.forward * Time.deltaTime;
             }
             else if(n == 3)
             {
                 //プレイヤーとの距離を保ちつつ左に移動
                 owner.m_animator.SetBool("IsBattleLeft", true);
                 //移動処理
-                owner.transform.position -= owner.m_enemyparameters.m_parameters.AGI / 2 * owner.transform.right * Time.deltaTime;
+                owner.transform.position -= owner.m_parameters.m_status.AGI / 2 * owner.transform.right * Time.deltaTime;
             }
             else if(n == 4)
             {
                 //プレイヤーとの距離を保ちつつ右に移動
                 owner.m_animator.SetBool("IsBattleRight", true);
                 //移動処理
-                owner.transform.position += owner.m_enemyparameters.m_parameters.AGI / 2 * owner.transform.right * Time.deltaTime;
+                owner.transform.position += owner.m_parameters.m_status.AGI / 2 * owner.transform.right * Time.deltaTime;
             }
             else if(n == 5)
             {
@@ -126,7 +126,7 @@ namespace RinneResourceStateMachineAI
                 //通常状態へ変更
                 owner.ChangeState(AIState.Idle_Mode);
                 //未発見状態に変更
-                owner.m_enemyparameters.m_parameters.IsFlag = false;
+                owner.m_parameters.m_status.IsFlag = false;
             }
 
             //経過時間処理
@@ -142,7 +142,7 @@ namespace RinneResourceStateMachineAI
             owner.m_animator.SetBool("IsBattleRight", false);
             m_elapsedtime = 0.0f;
             //検知フラグオフ
-            owner.m_enemyparameters.m_parameters.IsFlag = false;
+            owner.m_parameters.m_status.IsFlag = false;
             DebugUtility.Log("Goblin_Battleを終了しました");
         }
     }
