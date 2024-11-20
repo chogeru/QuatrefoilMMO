@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a215e9a94ee061e4396e1380033dc0cb, type: 3}
+  m_Name: Portion
+  m_EditorClassIdentifier: 
+  m_Itemname: "\u30DD\u30FC\u30B7\u30E7\u30F3\uFF08\u5C0F\uFF09"
+  m_Itemtype: 6
+  m_Itemicon: {fileID: 21300000, guid: fadd2c2aa3e906c46a273e039fdcf98e, type: 3}
+  m_Itemexplanation: "HP\u309250\u56DE\u5FA9\u3059\u308B\u3053\u3068\u304C\u3067\u304D\u308B"
+  m_Itemlimit: 99
