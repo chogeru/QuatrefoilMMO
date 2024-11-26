@@ -19,7 +19,7 @@ public class MRinneDamageProcess : MonoBehaviour
         {
             Parameters parameters = other.GetComponent<Parameters>();
             //接触したオブジェクトのパラメータタイプがプレイヤー
-            if(parameters.m_status.type == "ゴブリン")
+            if(parameters.GetParameterType() == "Enemy")
             {
                 
                 //ダメージ処理

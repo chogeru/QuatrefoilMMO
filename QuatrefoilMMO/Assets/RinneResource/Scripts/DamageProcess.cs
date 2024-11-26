@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DamageProcess : MonoBehaviour
 {
-    //private Parameters m_parameters;
+    private Parameters m_parameters;
     void Start()
     {
         //自分自身のパラメータ取得
-        //m_parameters = GetComponentInParent<Parameters>();
+        m_parameters = GetComponentInParent<Parameters>();
     }
 
     //接触した瞬間
@@ -19,10 +19,10 @@ public class DamageProcess : MonoBehaviour
         {
             Parameters parameters = other.GetComponent<Parameters>();
             //接触したオブジェクトのパラメータタイプがプレイヤー
-            if(parameters.m_status.type == "プレイヤー")
+            if(parameters.GetParameterType() == "Player")
             {
                 //ダメージ処理
-                parameters.AttackHit(parameters.m_status.ATK);
+                parameters.AttackHit(m_parameters.m_status.ATK);
                 Debug.Log("ダメージが入りました。");
             }
         }

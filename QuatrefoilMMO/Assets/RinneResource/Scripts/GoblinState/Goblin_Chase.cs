@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using AbubuResouse.Log;
 
 /// <summary>
@@ -11,26 +12,38 @@ namespace RinneResourceStateMachineAI
 {
     public class Goblin_Chase : State<EnemyAI>
     {
+        private Animator m_animator;
+        private NavMeshAgent m_navmeshagent;
+        private Parameters m_parameters;
+        private Enemyeye m_enemyeye;
         public Goblin_Chase(EnemyAI owner) : base(owner) {}
 
         public override void Enter()
         {
             DebugUtility.Log("Goblin_Chaseを起動しました");
+            //アニメーションコンポーネント取得
+            m_animator = owner.GetAnimator();
+            //ナビメッシュコンポーネント取得
+            m_navmeshagent = owner.GetNavMeshAgent();
+            //パラメータコンポーネント取得
+            m_parameters = owner.GetParameters();
+            //視野判定コンポーネント取得
+            m_enemyeye = owner.GetEnemyeye();
             //移動スピード
-            owner.m_agent.speed *= 1.5f;
+            m_navmeshagent.speed *= 1.5f;
             //ナビゲーション開始
-            owner.m_agent.isStopped = false;
+            m_navmeshagent.isStopped = false;
             //チェイスアニメーション起動
-            owner.m_animator.SetBool("IsRun_Enemy", true);
+            m_animator.SetBool("IsRun_Enemy", true);
         }
 
         public override void Stay()
         {
             //ターゲットとの距離
-            float targetLength = owner.m_eye.m_posdelta.magnitude;
+            float targetLength = m_enemyeye.m_posdelta.magnitude;
 
             //ターゲットを追いかける
-            owner.m_agent.SetDestination(owner.m_targetplayer.transform.position);
+            m_navmeshagent.SetDestination(owner.m_targetplayer.transform.position);
             
             //攻撃の間合いに入ったら
             if(targetLength < 2f)
@@ -45,7 +58,7 @@ namespace RinneResourceStateMachineAI
                 //通常状態へ変更
                 owner.ChangeState(AIState.Idle_Mode);
                 //未発見状態に変更
-                owner.m_parameters.m_status.IsFlag = false;
+                m_parameters.m_status.IsFlag = false;
             }
         }
 
@@ -53,13 +66,13 @@ namespace RinneResourceStateMachineAI
         {
             DebugUtility.Log("Goblin_Chaseを終了しました");
             //ナビゲーション終了
-            owner.m_agent.isStopped = true;
+            m_navmeshagent.isStopped = true;
             //スピードを戻す
-            owner.m_agent.speed /= 1.5f;
+            m_navmeshagent.speed /= 1.5f;
             //チェイスアニメーション終了
-            owner.m_animator.SetBool("IsRun_Enemy", false);
+            m_animator.SetBool("IsRun_Enemy", false);
             //検知フラグオフ
-            owner.m_parameters.m_status.IsFlag = false;
+            m_parameters.m_status.IsFlag = false;
         }
     }
 }

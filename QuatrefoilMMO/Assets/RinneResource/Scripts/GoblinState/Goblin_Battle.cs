@@ -11,6 +11,10 @@ namespace RinneResourceStateMachineAI
 {
     public class Goblin_Battle : State<EnemyAI>
     {
+        private Animator m_animator;
+        private Parameters m_parameters;
+        private Enemyeye m_enemyeye;
+
         private float m_elapsedtime;    //経過時間
         private float m_actiontime;     //行動変化の時間
         private float m_cooltime;       //ステートの切り替え時間
@@ -22,8 +26,14 @@ namespace RinneResourceStateMachineAI
         public override void Enter()
         {
             DebugUtility.Log("Goblin_Battleを起動しました");
+            //アニメーションコンポーネント取得
+            m_animator = owner.GetAnimator();
+            //パラメータコンポーネント取得
+            m_parameters = owner.GetParameters();
+            //視野判定コンポーネント取得
+            m_enemyeye = owner.GetEnemyeye();
             //戦闘態勢アニメーション起動
-            owner.m_animator.SetBool("IsBattleMode_Enemy", true);
+            m_animator.SetBool("IsBattleMode_Enemy", true);
             //4から12秒はこのステートで待機
             m_cooltime = Random.Range(4, 12);
             //初回発見時は待機状態
@@ -44,17 +54,17 @@ namespace RinneResourceStateMachineAI
             eulerAngles.z = 0;
             owner.transform.eulerAngles = eulerAngles;
             //ターゲットとの距離
-            float targetLength = owner.m_eye.m_posdelta.magnitude;
+            float targetLength = m_enemyeye.m_posdelta.magnitude;
 
 
             //2秒経過ごとに
             if (m_actiontime > 2f)
             {
                 //アニメーションのリセット
-                owner.m_animator.SetBool("IsBattleBack", false);
-                owner.m_animator.SetBool("IsBattleForward", false);
-                owner.m_animator.SetBool("IsBattleLeft", false);
-                owner.m_animator.SetBool("IsBattleRight", false);
+                m_animator.SetBool("IsBattleBack", false);
+                m_animator.SetBool("IsBattleForward", false);
+                m_animator.SetBool("IsBattleLeft", false);
+                m_animator.SetBool("IsBattleRight", false);
                 //行動を切り替え
                 n = Random.Range(1, 6);
                 m_actiontime -= 2f;
@@ -64,30 +74,30 @@ namespace RinneResourceStateMachineAI
             if (n == 1)
             {
                 //後ろに下がる
-                owner.m_animator.SetBool("IsBattleBack", true);
+                m_animator.SetBool("IsBattleBack", true);
                 //移動処理
-                owner.transform.position -= owner.m_parameters.m_status.AGI / 2 * owner.transform.forward * Time.deltaTime;
+                owner.transform.position -= m_parameters.m_status.AGI / 2 * owner.transform.forward * Time.deltaTime;
             }
             else if(n == 2 && targetLength > 1.5f)
             {
                 //プレイヤーに近づく
-                owner.m_animator.SetBool("IsBattleForward", true);
+                m_animator.SetBool("IsBattleForward", true);
                 //移動処理
-                owner.transform.position += owner.m_parameters.m_status.AGI / 2 * owner.transform.forward * Time.deltaTime;
+                owner.transform.position += m_parameters.m_status.AGI / 2 * owner.transform.forward * Time.deltaTime;
             }
             else if(n == 3)
             {
                 //プレイヤーとの距離を保ちつつ左に移動
-                owner.m_animator.SetBool("IsBattleLeft", true);
+                m_animator.SetBool("IsBattleLeft", true);
                 //移動処理
-                owner.transform.position -= owner.m_parameters.m_status.AGI / 2 * owner.transform.right * Time.deltaTime;
+                owner.transform.position -= m_parameters.m_status.AGI / 2 * owner.transform.right * Time.deltaTime;
             }
             else if(n == 4)
             {
                 //プレイヤーとの距離を保ちつつ右に移動
-                owner.m_animator.SetBool("IsBattleRight", true);
+                m_animator.SetBool("IsBattleRight", true);
                 //移動処理
-                owner.transform.position += owner.m_parameters.m_status.AGI / 2 * owner.transform.right * Time.deltaTime;
+                owner.transform.position += m_parameters.m_status.AGI / 2 * owner.transform.right * Time.deltaTime;
             }
             else if(n == 5)
             {
@@ -126,7 +136,7 @@ namespace RinneResourceStateMachineAI
                 //通常状態へ変更
                 owner.ChangeState(AIState.Idle_Mode);
                 //未発見状態に変更
-                owner.m_parameters.m_status.IsFlag = false;
+                m_parameters.m_status.IsFlag = false;
             }
 
             //経過時間処理
@@ -136,13 +146,13 @@ namespace RinneResourceStateMachineAI
 
         public override void Exit()
         {
-            owner.m_animator.SetBool("IsBattleBack", false);
-            owner.m_animator.SetBool("IsBattleForward", false);
-            owner.m_animator.SetBool("IsBattleLeft", false);
-            owner.m_animator.SetBool("IsBattleRight", false);
+            m_animator.SetBool("IsBattleBack", false);
+            m_animator.SetBool("IsBattleForward", false);
+            m_animator.SetBool("IsBattleLeft", false);
+            m_animator.SetBool("IsBattleRight", false);
             m_elapsedtime = 0.0f;
             //検知フラグオフ
-            owner.m_parameters.m_status.IsFlag = false;
+            m_parameters.m_status.IsFlag = false;
             DebugUtility.Log("Goblin_Battleを終了しました");
         }
     }

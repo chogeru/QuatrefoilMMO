@@ -11,6 +11,9 @@ namespace RinneResourceStateMachineAI
 {
     public class Goblin_Idle : State<EnemyAI>
     {
+        private Animator m_animator;
+        private Parameters m_parameters;
+
         float m_elapsedtime;        //経過時間
         float m_cooltime;           //クールタイム
 
@@ -20,9 +23,12 @@ namespace RinneResourceStateMachineAI
         public override void Enter()
         {
             DebugUtility.Log("Goblin_Idleを起動しました");
-
+            //アニメーションコンポーネント取得
+            m_animator = owner.GetAnimator();
+            //パラメータコンポーネント取得
+            m_parameters = owner.GetParameters();
             //バトルアニメーション解除
-            owner.m_animator.SetBool("IsBattleMode_Enemy", false);
+            m_animator.SetBool("IsBattleMode_Enemy", false);
 
             m_elapsedtime = 0.0f;
             //1から5秒をランダム
@@ -33,7 +39,7 @@ namespace RinneResourceStateMachineAI
         public override void Stay()
         {
             //プレイヤー発見
-            if (owner.m_parameters.m_status.IsFlag)
+            if (m_parameters.m_status.IsFlag)
             {
                 //バトルモードに変更
                 owner.ChangeState(AIState.Battle_Mode);

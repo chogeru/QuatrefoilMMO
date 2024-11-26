@@ -30,25 +30,25 @@ namespace RinneResourceStateMachineAI
         : StatefulObjectBase<EnemyAI, AIState>
     {
         //アニメーションコンポーネント
-        public Animator m_animator;
+        private Animator m_animator;
         //ナビメッシュコンポーネント
-        public NavMeshAgent m_agent;
+        private NavMeshAgent m_agent;
         //リジッドボディーコンポーネント
-        public Rigidbody m_rb;
+        private Rigidbody m_rb;
         //敵のパラメーター
-        public Parameters m_parameters;
+        private Parameters m_parameters;
         //敵のスポーン
-        public EnemySpawn m_enemyspawn;
+        private EnemySpawn m_enemyspawn;
         //視野判定処理
-        public Enemyeye m_eye;
+        private Enemyeye m_eye;
         //ターゲットプレイヤー
         public GameObject m_targetplayer;
         //UI
         public GameObject m_ui;
         //首
         public Transform m_neck;
-        //当たり判定コリジョン
-        public GameObject m_hitbox;
+        [SerializeField,Header("攻撃用当たり判定")]
+        private GameObject m_attackbox;
 
         private void Start()
         {
@@ -68,7 +68,7 @@ namespace RinneResourceStateMachineAI
             //m_neck = animator.GetBoneTransform(HumanBodyBones.Neck);
 
             //初回起動時は攻撃用当たり判定をオフにする
-            m_hitbox.SetActive(false);
+            m_attackbox.SetActive(false);
             //発見時のUIをオフにする
             if(m_ui != null) m_ui.SetActive(false);
             //ステートマシーンを自身として設定
@@ -141,7 +141,57 @@ namespace RinneResourceStateMachineAI
         private void OnDestroy()
         {
             //ポップした数を減らす
-            m_enemyspawn.m_spawncnt--;
+            m_enemyspawn.DownSpawncnt();
+
+            //ランダムでアイテムをドロップさせる
+        }
+
+        //アイテムドロップ
+        private void LostItem()
+        {
+            
+        }
+
+        //攻撃用当たり判定を取得
+        public GameObject GetAttackBox()
+        {
+            return m_attackbox;
+        }
+
+        //アニメーションコンポーネント取得
+        public Animator GetAnimator()
+        {
+            return m_animator;
+        }
+
+        //ナビメッシュコンポーネント取得
+        public NavMeshAgent GetNavMeshAgent()
+        {
+            return m_agent;
+        }
+
+        //リジッドボディーコンポーネント取得
+        public Rigidbody GetRigidbody()
+        {
+            return m_rb;
+        }
+
+        //パラメーターコンポーネント取得
+        public Parameters GetParameters()
+        {
+            return m_parameters;
+        }
+
+        //スポーンポイントコンポーネント取得
+        public EnemySpawn GetEnemySpawn()
+        {
+            return m_enemyspawn;
+        }
+
+        //視野判定コンポーネント取得
+        public Enemyeye GetEnemyeye()
+        {
+            return m_eye;
         }
     }
 }

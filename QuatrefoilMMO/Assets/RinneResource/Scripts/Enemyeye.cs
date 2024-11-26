@@ -6,20 +6,20 @@ namespace RinneResourceStateMachineAI
 {
     public class Enemyeye : MonoBehaviour
     {
-        private EnemyAI ea;             //エネミーAI
-        private Parameters m_parameters;     //パラメーター
-        private SphereCollider sc;      //探知距離用スフィアコライダー
-        public GameObject m_player;     //プレイヤー
-        public Vector3 m_posdelta;      //プレイヤーとの距離ベクトル
+        private EnemyAI m_enemyai;                      //エネミーAI
+        private Parameters m_parameters;                //パラメーター
+        private SphereCollider m_spherecollider;        //探知距離用スフィアコライダー
+        public GameObject m_player;                     //プレイヤー
+        public Vector3 m_posdelta;                      //プレイヤーとの距離ベクトル
 
         void Start()
         {
             //コンポーネント取得
-            ea = GetComponentInParent<EnemyAI>();
+            m_enemyai = GetComponentInParent<EnemyAI>();
             m_parameters = GetComponentInParent<Parameters>();
-            sc = GetComponent<SphereCollider>();
+            m_spherecollider = GetComponent<SphereCollider>();
             //視野距離の設定
-            sc.radius = m_parameters.m_status.MaxDistance;
+            m_spherecollider.radius = m_parameters.m_status.MaxDistance;
         }
 
 
@@ -39,10 +39,10 @@ namespace RinneResourceStateMachineAI
             {
                 Parameters parameters = other.GetComponent<Parameters>();
                 //接触したパラメーターのタイプがプレイヤーの時
-                if (parameters.m_status.type == "プレイヤー")
+                if (parameters.GetParameterType() == "Player")
                 {
                     //検知したプレイヤーをターゲットにする
-                    if (ea.m_targetplayer == null) ea.m_targetplayer = other.gameObject;
+                    if (m_enemyai.m_targetplayer == null) m_enemyai.m_targetplayer = other.gameObject;
                     m_player = other.gameObject;
 
                     float targetAngle = Vector3.Angle(transform.forward, m_posdelta);
