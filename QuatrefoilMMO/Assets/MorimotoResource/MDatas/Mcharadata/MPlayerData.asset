@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ada246aeaf03840904b0e85964083b, type: 3}
+  m_Name: MPlayerData
+  m_EditorClassIdentifier: 
+  NAME: "\u4E3B\u4EBA\u516C"
+  MAXHP: 500
+  MAXMP: 100
+  ATK: 200
+  DEF: 100
+  INT: 150
+  RES: 100
+  AGI: 350
+  LV: 1
+  EXP: 0
+  GOLD: 0
+  PlayerMAXHP: 500
+  PlayerMAXMP: 100
+  PlayerATK: 200
+  PlayerDEF: 100
+  PlayerINT: 150
+  PlayerRES: 100
+  PlayerAGI: 350
+  GrowMAXHP: 96
+  GrowMAXMP: 9
+  GrowATK: 8
+  GrowDEF: 9
+  GrowINT: 8
+  GrowRES: 9
+  GrowAGI: 6
+  FirstMAXHP: 500
+  FirstMAXMP: 100
+  FirstATK: 200
+  FirstDEF: 100
+  FirstINT: 150
+  FirstRES: 100
+  FirstAGI: 350
