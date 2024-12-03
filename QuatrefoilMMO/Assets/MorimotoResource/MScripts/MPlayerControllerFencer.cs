@@ -95,12 +95,11 @@ public class MPlayerControllerFencer : MonoBehaviour
         //攻撃アニメーション
         if (m_Attackdekiru == true)
         {
-            m_Attack = m_animator.GetFloat("Attack");
+            //m_Attack = m_animator.GetFloat("Attack");
             if (m_Combo == true)
             {
-                if (m_Attack > 3f)
+                if (m_Attack == 3f)
                 {
-                    m_animator.SetFloat("Attack", 0f);
                     m_Attackdekiru = false;
                     StartCoroutine(ComboEnd());
                 }
@@ -112,8 +111,6 @@ public class MPlayerControllerFencer : MonoBehaviour
                     if (m_Attack < 3f) m_Attack += 1f;
                     m_animator.SetFloat("Attack", m_Attack);
                     OnAttackButtonClicked();
-                    //攻撃判定用オブジェクトをオフにする
-                    m_attackHit.SetActive(false);
                 }
             }
             else
@@ -124,6 +121,7 @@ public class MPlayerControllerFencer : MonoBehaviour
                     {
                         m_animator.SetFloat("Attack", 1f);
                         OnAttackButtonClicked();
+                        m_Attack = m_animator.GetFloat("Attack");
                     }
                 }
             }
@@ -247,32 +245,37 @@ public class MPlayerControllerFencer : MonoBehaviour
     //攻撃ボタンクリック時に呼び出されるコールバック
     public void OnAttackButtonClicked()
     {
-        //接地していなければ、攻撃を開始しない
+        //接地していなければ、
         if (!m_isGround) return;
-        //既に攻撃中の場合は、再度攻撃を開始しない
-        //if (m_isAttack) return;
+        
         m_isAttack = true;
     }
 
     //攻撃アニメーションのヒット時のイベント関数
     private void Anim_AttackHit()
     {
-        //攻撃終了
+        //攻撃継続
         m_Combo = true;
 
         //攻撃判定用オブジェクトをオンにする
         m_attackHit.SetActive(true);
     }
 
-    //攻撃アニメーションに終了時のイベント関数
-    private void Anim_AttackEnd()
+    //攻撃アニメーションヒット終了時のイベント関数
+    private void Anim_AttackHitEnd()
     {
         //攻撃判定用オブジェクトをオフにする
         m_attackHit.SetActive(false);
+    }
+
+    //攻撃アニメーションに終了時のイベント関数
+    private void Anim_AttackEnd()
+    { 
         //攻撃終了
         m_isAttack = false;
         m_Combo = false;
         m_animator.SetFloat("Attack", 0f);
+        m_Attack = m_animator.GetFloat("Attack");
     }
 
     IEnumerator ComboEnd()
