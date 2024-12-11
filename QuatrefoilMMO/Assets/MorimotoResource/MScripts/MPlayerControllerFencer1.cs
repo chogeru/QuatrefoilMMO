@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 
-public class MPlayerControllerFencer : MonoBehaviour
+public class MPlayerControllerFencer1 : MonoBehaviour
 {
     //歩き移動速度
     [SerializeField]
@@ -92,14 +92,7 @@ public class MPlayerControllerFencer : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            //boolで設定したisAttackをtrueにする
-            m_animator.SetBool("isAttack", true);
-        }
-
         //floatの連続攻撃
-        /*
         //攻撃アニメーション
         if (m_Attackdekiru == true)
         {
@@ -134,7 +127,6 @@ public class MPlayerControllerFencer : MonoBehaviour
                 }
             }
         }
-        */
 
         //Spaceキーでジャンプ
         if (Input.GetKeyDown(KeyCode.Space))
@@ -263,17 +255,14 @@ public class MPlayerControllerFencer : MonoBehaviour
     private void Anim_AttackHit()
     {
         //floatの連続攻撃
-        /*
         //攻撃継続
-        //m_Combo = true;
-        */
+        m_Combo = true;
 
         //攻撃判定用オブジェクトをオンにする
         m_attackHit.SetActive(true);
     }
 
     //floatの連続攻撃
-    
     //攻撃アニメーションヒット終了時のイベント関数
     private void Anim_AttackHitEnd()
     {
@@ -285,28 +274,19 @@ public class MPlayerControllerFencer : MonoBehaviour
     private void Anim_AttackEnd()
     {
         //floatの連続攻撃
-        /*
         //攻撃終了
         m_isAttack = false;
         m_Combo = false;
         m_animator.SetFloat("Attack", 0f);
         m_Attack = m_animator.GetFloat("Attack");
-        */
-        
-        //攻撃判定用オブジェクトをオフにする
-        //m_attackHit.SetActive(false);
     }
 
     //floatの連続攻撃
-    /*
     IEnumerator ComboEnd()
     {
-        
-        
         // コンボ終了時待機  
         yield return new WaitForSeconds(m_ComboEndtime);
         m_Attackdekiru = true;
     }
-    */
 }
 
