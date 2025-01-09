@@ -48,7 +48,10 @@ public class Parameters : MonoBehaviour
     //攻撃ヒット時の処理
     public void AttackHit(float ATK)
     {
+        //HPから攻撃力を引く
         m_status.HP = m_status.HP - ATK;
+        //攻撃されると発見状態にする
+        m_status.IsFlag = true;
     }
 
     //種類を文字列に変換して取得

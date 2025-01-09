@@ -15,18 +15,19 @@ public class EnemyDamageProcess : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //パラメータを持ったオブジェクト
-        if (other.GetComponent<Parameters>())
+        if (other.GetComponent<MPlayerDamage>())
         {
-            Parameters parameters = other.GetComponent<Parameters>();
+            MPlayerDamage playerdamage = other.GetComponent<MPlayerDamage>();
+            playerdamage.Damage((int)m_parameters.m_status.ATK);
             //接触したオブジェクトのパラメータタイプがプレイヤー
-            if(parameters.GetParameterType() == "Player")
-            {
-                //ダメージ処理
-                parameters.AttackHit(m_parameters.m_status.ATK);
-                Debug.Log("ダメージが入りました。");
-                //発見状態に変更
-                parameters.m_status.IsFlag = true;
-            }
+            //if(parameters.GetParameterType() == "Player")
+            //{
+            //    //ダメージ処理
+            //    parameters.AttackHit(m_parameters.m_status.ATK);
+            //    Debug.Log("ダメージが入りました。");
+            //    //発見状態に変更
+            //    parameters.m_status.IsFlag = true;
+            //}
         }
     }
 }

@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 821f04d6c93c76a4b8ca9b323ace47a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_cooltime: 5
+  m_cooltime: 30
   m_maxspawncnt: 1
   enemydata:
   - {fileID: 11400000, guid: ee7c7035b7643fa4abf10da8d5d7d8ef, type: 2}
