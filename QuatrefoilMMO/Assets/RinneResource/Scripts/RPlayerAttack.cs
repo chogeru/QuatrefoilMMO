@@ -11,9 +11,14 @@ public class RPlayerAttack : MonoBehaviour
     //AttackHitがゲームオブジェクトに侵入した瞬間に呼び出し
     private void OnTriggerEnter(Collider other)
     {
-        //otherのゲームオブジェクトのインターフェースを呼び出す
-        Parameters parameters = other.GetComponent<Parameters>();
-
-        parameters.AttackHit(m_charadata.ATK);
+        if(other.GetComponent<Parameters>())
+        {
+            Parameters parameters = other.GetComponent<Parameters>();
+            if (parameters.GetParameterType() =="Enemy")
+            {
+                parameters.AttackHit(m_charadata.ATK);
+            }
+        }
+        
     }
 }

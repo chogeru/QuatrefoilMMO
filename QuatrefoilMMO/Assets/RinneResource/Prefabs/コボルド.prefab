@@ -2639,9 +2639,9 @@ MonoBehaviour:
   m_status:
     type: 1
     LV: 0
-    HP: 100
+    HP: 400
     MP: 0
-    ATK: 20
+    ATK: 130
     DEF: 0
     RES: 0
     AGI: 1

@@ -756,7 +756,7 @@ MonoBehaviour:
   m_status:
     type: 1
     LV: 1
-    HP: 500
+    HP: 1000
     MP: 0
     ATK: 200
     DEF: 0
