@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7362495682184769902}
   - component: {fileID: 4966844538572979941}
   - component: {fileID: 424542136074361152}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u8996\u91CE\u7BC4\u56F2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 7539288003101127826}
   - component: {fileID: 2067103883980312301}
   - component: {fileID: 2433872627564362380}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 2752772221118764424}
   - component: {fileID: 6168235391552824143}
   - component: {fileID: 2198326645907772998}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 6291221434236947929}
   - component: {fileID: 4911481571157190503}
   - component: {fileID: 5645229366707301272}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,7 +371,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234721}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Clavicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,7 +403,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234723}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Finger0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,7 +435,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234725}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Finger01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -467,7 +467,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234727}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Finger02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,7 +498,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234731}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -531,7 +531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234733}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -563,7 +563,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234735}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Calf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,7 +596,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234737}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Factice003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -628,7 +628,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234739}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Factice004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -660,7 +660,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234741}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Factice005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -694,7 +694,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234749}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Factice001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -725,7 +725,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234751}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Factice002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -756,7 +756,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234785}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Finger22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -787,7 +787,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234787}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Finger3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -819,7 +819,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234789}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Finger31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -851,7 +851,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234791}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Finger32
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -882,7 +882,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234793}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Finger11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -914,7 +914,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234795}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Finger12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -945,7 +945,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234797}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Finger2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -977,7 +977,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234799}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Finger21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1009,7 +1009,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234801}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Finger0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1041,7 +1041,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234803}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Finger01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1073,7 +1073,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234805}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Finger02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1104,7 +1104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234807}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Finger1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1136,7 +1136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234809}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ Pelvis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1170,7 +1170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234811}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ Queue de cheval 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1201,7 +1201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234813}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Calf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1234,7 +1234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234815}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Clavicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1266,7 +1266,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234689}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Thigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1298,7 +1298,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234691}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Toe0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1329,7 +1329,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234693}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L UpperArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1361,7 +1361,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234695}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1393,7 +1393,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234697}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Finger32
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1424,7 +1424,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234699}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1456,7 +1456,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234701}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Forearm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1490,7 +1490,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234703}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1528,7 +1528,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234705}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Finger21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1561,7 +1561,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234707}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Finger22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1593,7 +1593,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234709}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Finger3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1625,7 +1625,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234711}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Finger31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1657,7 +1657,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234713}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Finger1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1689,7 +1689,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234715}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Finger11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1721,7 +1721,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234717}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Finger12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1753,7 +1753,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234719}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ L Finger2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1787,7 +1787,7 @@ GameObject:
   - component: {fileID: 8845424265005235105}
   - component: {fileID: 8845424265008626177}
   - component: {fileID: 8845424265007528129}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_ForearmArmorRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1870,7 +1870,7 @@ GameObject:
   - component: {fileID: 8845424265005235107}
   - component: {fileID: 8845424265008626179}
   - component: {fileID: 8845424265007528131}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_LegArmorLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1953,7 +1953,7 @@ GameObject:
   - component: {fileID: 8845424265005235109}
   - component: {fileID: 8845424265008626181}
   - component: {fileID: 8845424265007528133}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_LegArmorRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2036,7 +2036,7 @@ GameObject:
   - component: {fileID: 8845424265005235111}
   - component: {fileID: 8845424265008626183}
   - component: {fileID: 8845424265007528135}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2118,7 +2118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8845424265005235113}
   - component: {fileID: 8845424265010801427}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SK_Slingshot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2208,7 +2208,7 @@ GameObject:
   - component: {fileID: 8845424265005235115}
   - component: {fileID: 8845424265008626187}
   - component: {fileID: 8845424265007528139}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_DaggerLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2291,7 +2291,7 @@ GameObject:
   - component: {fileID: 8845424265005235117}
   - component: {fileID: 8845424265008626189}
   - component: {fileID: 8845424265007528141}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_DaggerRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2374,7 +2374,7 @@ GameObject:
   - component: {fileID: 8845424265005235119}
   - component: {fileID: 8845424265008626191}
   - component: {fileID: 8845424265007528143}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_ForearmArmorLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2455,7 +2455,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005235123}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2488,7 +2488,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8845424265005235125}
   - component: {fileID: 8845424265010801439}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SK_GoblinBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2619,7 +2619,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8845424265005235127}
   - component: {fileID: 8845424265010801425}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SK_ShoulderPad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2706,7 +2706,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005235129}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: slingshot_rope_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2737,7 +2737,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005235131}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: slingshot_rope_middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2769,7 +2769,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005235133}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: slingshot_rope_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2806,7 +2806,7 @@ GameObject:
   - component: {fileID: 8845424265005524902}
   - component: {fileID: 311166460752100456}
   - component: {fileID: 3027838538396258901}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u30B4\u30D6\u30EA\u30F3"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2921,7 +2921,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_targetplayer: {fileID: 0}
   m_ui: {fileID: 2384987294537270833}
-  m_neck: {fileID: 8845424265005234695}
   m_attackbox: {fileID: 7288036621655800225}
 --- !u!114 &3027838538396258901
 MonoBehaviour:
@@ -2957,7 +2956,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234759}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: slingshot_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2993,7 +2992,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234769}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Toe0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3024,7 +3023,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234771}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R UpperArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3056,7 +3055,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234773}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3088,7 +3087,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234775}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ Spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3122,7 +3121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234777}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3154,7 +3153,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234779}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Forearm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3187,7 +3186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234781}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3224,7 +3223,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845424265005234783}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GOBLIN_ R Thigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3258,7 +3257,7 @@ GameObject:
   - component: {fileID: 8845424265005235097}
   - component: {fileID: 8845424265008626297}
   - component: {fileID: 8845424265007527993}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Stone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3341,7 +3340,7 @@ GameObject:
   - component: {fileID: 8845424265005235099}
   - component: {fileID: 8845424265008626299}
   - component: {fileID: 8845424265007527995}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}

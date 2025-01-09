@@ -36,7 +36,10 @@ public class MPlayerControllerFencer : MonoBehaviour
 
     private Animator m_animator = null;
     private Rigidbody m_rigidbody = null;
-    private Camera m_mainCamera = null;
+    //private Camera m_mainCamera = null;
+
+    [SerializeField]
+    private Camera m_mainCamera;
 
     //移動用横方向入力
     private float m_horizontalKeyInput = 0f;
@@ -59,7 +62,7 @@ public class MPlayerControllerFencer : MonoBehaviour
     protected void Awake()
     {
         //メインカメラを取得
-        m_mainCamera = Camera.main;
+        //m_mainCamera = Camera.main;
         //プレイヤーのGameObjectにアタッチされているAnimatorコンポーネントを取得
         m_animator = GetComponent<Animator>();
         //Rigidbobyコンポーネントを取得
