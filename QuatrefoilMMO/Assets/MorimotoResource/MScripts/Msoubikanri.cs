@@ -57,7 +57,7 @@ public class Msoubikanri : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI m_soubisetumei;
 
-    private Mitemdata.m_itemtype m_Soubitype;
+    private Mitemdata.m_itemsoubitype m_Soubitype;
 
     //どのキャラを操作するか持っているゲームオブジェクトを指定
     [SerializeField]
@@ -102,15 +102,15 @@ public class Msoubikanri : MonoBehaviour
 
         //キャラ装備を取得
         m_Playerkanriscript = m_PlayerkanriObject.GetComponent<MPlayerControllerFencer>();
-        //Mplayerdata m_Sousachara = m_Playerkanriscript.Sousacharakoushin();
+        Mplayerdata m_Sousachara = m_Playerkanriscript.Sousacharakoushin();
 
         m_itemscript = m_itemObject.GetComponent<Mitemkanri>();
 
         //キャラの装備をなしにする
-        //m_Sousachara.Soubi1 = null;
-        //m_Sousachara.Soubi2 = null;
-        //m_Sousachara.Soubi3 = null;
-        //m_Sousachara.Soubi4 = null;
+        m_Sousachara.Soubi1 = null;
+        m_Sousachara.Soubi2 = null;
+        m_Sousachara.Soubi3 = null;
+        m_Sousachara.Soubi4 = null;
     }
 
     //現在装備欄の更新
@@ -120,13 +120,13 @@ public class Msoubikanri : MonoBehaviour
         m_soubidankai = 0;
 
         //現在のキャラを取得
-        //Mplayerdata m_Sousachara = m_Playerkanricript.Sousacharakoushin();
+        Mplayerdata m_Sousachara = m_Playerkanriscript.Sousacharakoushin();
 
         //装備の配列をクリア
         Array.Clear(m_Soubi, 0, m_Soubi.Length);
 
         //キャラの装備を配列に代入
-        //m_Soubi[0] = m_Sousachara.Soubi1;
+        m_Soubi[0] = m_Sousachara.Soubi1;
 
         if (m_Soubi[0] != null)
         {
@@ -147,7 +147,7 @@ public class Msoubikanri : MonoBehaviour
             m_Icons[0].sprite = null;
         }
 
-        //m_Soubi[1] = m_Sousachara.Soubi2;
+        m_Soubi[1] = m_Sousachara.Soubi2;
 
         if (m_Soubi[1] != null)
         {
@@ -168,7 +168,7 @@ public class Msoubikanri : MonoBehaviour
             m_Icons[1].sprite = null;
         }
 
-        //m_Soubi[2] = m_Sousachara.Soubi3;
+        m_Soubi[2] = m_Sousachara.Soubi3;
 
         if (m_Soubi[2] != null)
         {
@@ -189,7 +189,7 @@ public class Msoubikanri : MonoBehaviour
             m_Icons[2].sprite = null;
         }
 
-        //m_Soubi[3] = m_Sousachara.Soubi4;
+        m_Soubi[3] = m_Sousachara.Soubi4;
 
         if (m_Soubi[3] != null)
         {
@@ -248,22 +248,22 @@ public class Msoubikanri : MonoBehaviour
         int y = int.Parse(x);
 
         //操作キャラのdataを取得
-        //Mplayerdata m_Sousachara = Platerkanricript.Sousacharakoushin();
+        Mplayerdata m_Sousachara = m_Playerkanriscript.Sousacharakoushin();
 
         //操作キャラの装備タイプを取得　ゲームオブジェクトの名前によって部位のアイテムタイプをとってくれる
         switch (x)
         {
             case "1":
-                //m_Soubitype = m_Sousachara.m_Soubitype1;
+                m_Soubitype = m_Sousachara.m_Soubitype1;
                 break;
             case "2":
-                //m_Soubitype = m_Sousachara.m_Soubitype1;
+                m_Soubitype = m_Sousachara.m_Soubitype2;
                 break;
             case "3":
-                //m_Soubitype = m_Sousachara.m_Soubitype1;
+                m_Soubitype = m_Sousachara.m_Soubitype3;
                 break;
             case "4":
-                //m_Soubitype = m_Sousachara.m_Soubitype1;
+                m_Soubitype = m_Sousachara.m_Soubitype4;
                 break;
         }
 
@@ -271,7 +271,7 @@ public class Msoubikanri : MonoBehaviour
         m_SoubikanouList.Clear();
 
         //アイテムのスクリプト（アイテムタイプを送る）を呼んで装備可能リストを取得する
-        //m_SoubikanouList = m_itemscript.itemtypelist(Soubitype);
+        m_SoubikanouList = m_itemscript.itemtypelist(m_Soubitype);
 
         //ここからスクロールビュー内のコンテンツを作成する
         //選択された現在装備欄のアイテムが存在する場合は「外す」選択用のゲームオブジェクトを制作する（プレハブ使用）
@@ -351,13 +351,12 @@ public class Msoubikanri : MonoBehaviour
             GameObject m_HokaSoubityu = m_soubiyousoscript.hokasoubityu();
 
             //アイテムスクリプトから装備可能リストのi番目のアイテムの持っている個数を取得。
-            //int m_soubisentakukosuu = itemscript.itemkosuu(SoubikanouList[i]);
+            int m_soubisentakukosuu = m_itemscript.itemkosuu(m_SoubikanouList[i]);
 
             //装備可能リストのi番目のアイテムが増備されている個数を取得
             int e = m_SoubiisoutyakuDictionary[m_SoubikanouList[i]];
 
             //持っている個数>装備されている個数かどうかで条件分岐
-            /*
             if (m_soubisentakukosuu > e)
             {
                 //装備可能なのは確定。
@@ -397,7 +396,6 @@ public class Msoubikanri : MonoBehaviour
                     m_HokaSoubityu.SetActive(true);
                 }
             }
-            */
         }
     }
 
@@ -443,21 +441,21 @@ public class Msoubikanri : MonoBehaviour
             m_SoubiisoutyakuDictionary[m_Soubi[d - 1]] -= 1;
 
             //操作キャラの選択されている現在装備欄に該当するアイテムを外す
-            //Mplayerdata m_Sousachara = Playerkanricript.Sousacharakousin();
+            Mplayerdata m_Sousachara = m_Playerkanriscript.Sousacharakoushin();
 
             switch (d)
             {
                 case 1:
-                    //m_Sousachara.Soubi1 = null;
+                    m_Sousachara.Soubi1 = null;
                     break;
                 case 2:
-                    //m_Sousachara.Soubi2 = null;
+                    m_Sousachara.Soubi2 = null;
                     break;
                 case 3:
-                    //m_Sousachara.Soubi3 = null;
+                    m_Sousachara.Soubi3 = null;
                     break;
                 case 4:
-                    //m_Sousachara.Soubi4 = null;
+                    m_Sousachara.Soubi4 = null;
                     break;
             }
 
@@ -491,15 +489,15 @@ public class Msoubikanri : MonoBehaviour
         string m_Plus = "+";
 
         //作成しておいたアイテムのステータスの前に+をつけ、その文字列を各textに代入して表示する
-        //m_ATKKASAN.text = m_Plus + (m_SoubikanouList[y].GetItemATK()).ToString();
-        //m_DEFKASAN.text = m_Plus + (m_SoubikanouList[y].GetItemDEF()).ToString();
-        //m_INTKASAN.text = m_Plus + (m_SoubikanouList[y].GetItemINT()).ToString();
-        //m_RESKASAN.text = m_Plus + (m_SoubikanouList[y].GetItemRES()).ToString();
-        //m_AGIKASAN.text = m_Plus + (m_SoubikanouList[y].GetItemAGI()).ToString();
+        m_ATKKASAN.text = m_Plus + (m_SoubikanouList[y].GetItemATK()).ToString();
+        m_DEFKASAN.text = m_Plus + (m_SoubikanouList[y].GetItemDEF()).ToString();
+        m_INTKASAN.text = m_Plus + (m_SoubikanouList[y].GetItemINT()).ToString();
+        m_RESKASAN.text = m_Plus + (m_SoubikanouList[y].GetItemRES()).ToString();
+        m_AGIKASAN.text = m_Plus + (m_SoubikanouList[y].GetItemAGI()).ToString();
 
         //ステータス以外の情報も表示
-        //m_KYUU.text = (m_SoubikanouList[y].GetSoubiRank()).ToString();
-        //m_soubitypehyouzi.text = m_SoubikanouList[y].GetItemtypehyouzi();
+        m_KYUU.text = (m_SoubikanouList[y].GetSoubiRank()).ToString();
+        m_soubitypehyouzi.text = m_SoubikanouList[y].GetItemtypehyouzi();
         m_soubisetumei.text = m_SoubikanouList[y].GetItemexplanation();
 
         //装備可能欄のアイテムが選択された後、別のアイテムが再度選択された場合に備えた処理
@@ -519,13 +517,12 @@ public class Msoubikanri : MonoBehaviour
         GameObject m_Soubisoutyaku = m_soubiyousoscript.soubisoutyaku();
 
         //装備欄で選択されているアイテムの持っている個数を取得
-        //int m_soubisentakukosuu = m_itemscript.itemkosuu(m_SoubikanouList[y]);
+        int m_soubisentakukosuu = m_itemscript.itemkosuu(m_SoubikanouList[y]);
         //装備欄で選択されているアイテムの装備されている個数を取得
         int e = m_SoubiisoutyakuDictionary[m_SoubikanouList[y]];
 
         //持っている個数>装備個数
         m_Soubisoutyaku.SetActive(false);
-        /*
         if (m_soubisentakukosuu > e)
         {
             //現在装備欄で選択されているアイテムと装備可能欄で選択されているアイテムが同じではない。
@@ -535,7 +532,6 @@ public class Msoubikanri : MonoBehaviour
                 m_Soubisoutyaku.SetActive(true);
             }
         }
-        */
         //装備可能欄で現在選択されているトグルを記憶
         m_kakotggle = m_tgl2;
     }
@@ -574,23 +570,23 @@ public class Msoubikanri : MonoBehaviour
         }
 
         //操作キャラを取得。
-        //Mplayerdata m_Sousachara = Playerkanricript.Sousacharakoushin();
+        Mplayerdata m_Sousachara = m_Playerkanriscript.Sousacharakoushin();
 
         //現在装備欄に該当する操作キャラの装備アイテムに装備可能欄で選択していたアイテムを指定
 
         switch (b)
         {
             case 1:
-                //m_Sousachara.Soubi1 = m_SoubikanouList[y];
+                m_Sousachara.Soubi1 = m_SoubikanouList[y];
                 break;
             case 2:
-                //m_Sousachara.Soubi2 = m_SoubikanouList[y];
+                m_Sousachara.Soubi2 = m_SoubikanouList[y];
                 break;
             case 3:
-                //m_Sousachara.Soubi3 = m_SoubikanouList[y];
+                m_Sousachara.Soubi3 = m_SoubikanouList[y];
                 break;
             case 4:
-                //m_Sousachara.Soubi4 = m_SoubikanouList[y];
+                m_Sousachara.Soubi4 = m_SoubikanouList[y];
                 break;
         }
 

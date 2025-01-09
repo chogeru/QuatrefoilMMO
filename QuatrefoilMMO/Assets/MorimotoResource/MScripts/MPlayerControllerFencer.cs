@@ -308,5 +308,55 @@ public class MPlayerControllerFencer : MonoBehaviour
         m_Attackdekiru = true;
     }
     */
+
+    public Mplayerdata Sousacharakoushin()
+    {
+        Mplayerdata mplayerdata = new Mplayerdata();
+        mplayerdata.m_Soubitype1 = Mitemdata.m_itemsoubitype.Weapon;
+        mplayerdata.m_Soubitype2 = Mitemdata.m_itemsoubitype.Armor;
+        mplayerdata.m_Soubitype3 = Mitemdata.m_itemsoubitype.Accessory;
+        mplayerdata.m_Soubitype4 = Mitemdata.m_itemsoubitype.Accessory;
+        return mplayerdata;
+    }
+
+    [SerializeField]
+    private List<MItem2Data> m_item2DataListList = new List<MItem2Data>();  //プレイヤー所持アイテム
+    //アイテムを取得
+    public void CountItem(string itemid,int count)
+    {
+        for(int i = 0; i < m_item2DataListList.Count; i++)
+        {
+            //IDが一致していたらカウント
+            if (m_item2DataListList[i].m_id == itemid)
+            {
+                m_item2DataListList[i].CountUp(count);
+                break;
+            }
+        }
+        //IDが一致しなければアイテムを追加
+        MItem2Data item2Data = new MItem2Data(itemid, count);
+        m_item2DataListList.Add(item2Data);
+    }
+
+    //アイテムを使用
+    public void UseItem(string itemid,int count)
+    {
+        //リスト内を検索
+        for(int i = 0; i < m_item2DataListList.Count; i++)
+        {
+            //IDが一致していたらカウント
+            if (m_item2DataListList[i].m_id == itemid)
+            {
+                //アイテムをカウントダウン
+                m_item2DataListList[i].CountDwon(count);
+                if (m_item2DataListList.Count == 0)
+                {
+                    MItem2Data item2Data = new MItem2Data(itemid, count);
+                    m_item2DataListList.Remove(item2Data);
+                }
+                break;
+            }
+        }
+    }
 }
 

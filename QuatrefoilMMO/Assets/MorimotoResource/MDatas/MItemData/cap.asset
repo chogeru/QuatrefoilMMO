@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a215e9a94ee061e4396e1380033dc0cb, type: 3}
-  m_Name: Portion
+  m_Name: cap
   m_EditorClassIdentifier: 
-  m_Itemname: "\u30DD\u30FC\u30B7\u30E7\u30F3\uFF08\u5C0F\uFF09"
-  m_Itemtype: 8
-  m_Itemsoubitype: 3
-  m_Itemicon: {fileID: 21300000, guid: fadd2c2aa3e906c46a273e039fdcf98e, type: 3}
-  m_Itemexplanation: "HP\u309250\u56DE\u5FA9\u3059\u308B\u3053\u3068\u304C\u3067\u304D\u308B"
-  m_Itemlimit: 99
-  ItemHP: 50
+  m_Itemname: "\u5E3D\u5B50"
+  m_Itemtype: 7
+  m_Itemsoubitype: 2
+  m_Itemicon: {fileID: 21300000, guid: 27633afda27b2fc49b8d9b3844250804, type: 3}
+  m_Itemexplanation: "\u304A\u6C17\u306B\u5165\u308A\u306E\u5E3D\u5B50"
+  m_Itemlimit: 0
+  ItemHP: 0
   ItemMP: 0
   ItemATK: 0
-  ItemDEF: 0
+  ItemDEF: 3
   ItemINT: 0
   ItemRES: 0
   ItemAGI: 0

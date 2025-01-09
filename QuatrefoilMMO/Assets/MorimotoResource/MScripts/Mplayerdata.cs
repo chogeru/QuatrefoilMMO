@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Mitemdata;
 
 [CreateAssetMenu(menuName ="Data/Create PlayerStatusData")]
 public class Mplayerdata : ScriptableObject
@@ -38,4 +39,14 @@ public class Mplayerdata : ScriptableObject
     public int FirstINT;    //魔力の初期
     public int FirstRES;    //魔法抵抗力の初期
     public int FirstAGI;    //移動速度の初期
+
+    public Mitemdata Soubi1;
+    public Mitemdata Soubi2;
+    public Mitemdata Soubi3;
+    public Mitemdata Soubi4;
+
+    public m_itemsoubitype m_Soubitype1;
+    public m_itemsoubitype m_Soubitype2;
+    public m_itemsoubitype m_Soubitype3;
+    public m_itemsoubitype m_Soubitype4;
 }

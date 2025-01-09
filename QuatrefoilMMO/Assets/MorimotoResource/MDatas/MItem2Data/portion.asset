@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247ed4e214ec59945a73ff8d6c8b0629, type: 3}
+  m_Name: portion
+  m_EditorClassIdentifier: 
+  m_id: portion
+  m_name: "\u30DD\u30FC\u30B7\u30E7\u30F3"
+  m_itemType: 9
+  m_setumei: "HP\u3092100\u56DE\u5FA9\u3059\u308B"
+  m_sprite: {fileID: 21300000, guid: fadd2c2aa3e906c46a273e039fdcf98e, type: 3}
+  m_HP: 100
+  m_ATK: 0
+  m_DEF: 0

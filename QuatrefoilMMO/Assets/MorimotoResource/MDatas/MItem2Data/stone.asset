@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247ed4e214ec59945a73ff8d6c8b0629, type: 3}
+  m_Name: stone
+  m_EditorClassIdentifier: 
+  m_id: stone
+  m_name: "\u3044\u3057\u3053\u308D"
+  m_itemType: 8
+  m_setumei: "\u305F\u3060\u306E\u3044\u3057\u3053\u308D"
+  m_sprite: {fileID: 21300000, guid: 2b5145613a59bff489e7fa544a73e120, type: 3}
+  m_HP: 0
+  m_ATK: 10
+  m_DEF: 0

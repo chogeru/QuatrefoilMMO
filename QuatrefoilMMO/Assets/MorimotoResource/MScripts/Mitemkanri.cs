@@ -95,6 +95,11 @@ public class Mitemkanri : MonoBehaviour
         m_itemkazu[m_itemDataBase.GetItemLists()[1]] = 2;
         //ロングソードの数を1にする
         m_itemkazu[m_itemDataBase.GetItemLists()[0]] = 1;
+        m_itemkazu[m_itemDataBase.GetItemLists()[2]] = 1;
+        m_itemkazu[m_itemDataBase.GetItemLists()[3]] = 1;
+        m_itemkazu[m_itemDataBase.GetItemLists()[4]] = 1;
+        m_itemkazu[m_itemDataBase.GetItemLists()[5]] = 1;
+        m_itemkazu[m_itemDataBase.GetItemLists()[6]] = 1;
 
         //持ち物更新処理を呼び出す
         Motimonokoushin();
@@ -290,5 +295,17 @@ public class Mitemkanri : MonoBehaviour
             m_itemname.text = null;
             m_itemsetumei.text = null;
         }
+    }
+
+    public int itemkosuu(Mitemdata soubilist)
+    {
+        return m_itemkazu[soubilist];
+    }
+
+    public List<Mitemdata> itemtypelist(m_itemsoubitype soubitype)
+    {
+        Mitemdata mitemdata = new Mitemdata();
+        soubitype = mitemdata.GetItemsoubitype();
+        return new List<Mitemdata>();
     }
 }
