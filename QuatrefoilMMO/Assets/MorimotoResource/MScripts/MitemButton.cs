@@ -11,12 +11,12 @@ public class MitemButton : MonoBehaviour,
 {
     [SerializeField]
     private GameObject m_ActiveObject;
-    [SerializeField]
-    private GameObject m_itemkanri;
-    private Mitemkanri m_itemscript;
+    //[SerializeField]
+    //private GameObject m_itemkanri;
+    //private Mitemkanri m_itemscript;
     private void Start()
     {
-        m_itemscript = m_itemkanri.GetComponent<Mitemkanri>();
+        //m_itemscript = m_itemkanri.GetComponent<Mitemkanri>();
     }
 
     // 押す  
@@ -25,7 +25,7 @@ public class MitemButton : MonoBehaviour,
 
 
         m_ActiveObject.gameObject.SetActive(true);
-        m_itemscript.slotkoushin();
+        //m_itemscript.slotkoushin();
 
     }
     // 押されたまま

@@ -7,11 +7,24 @@ public class Mitemran : MonoBehaviour
 {
     public Text m_nameText;
     public Text m_setumeiText;
-    public GameObject m_useButton;
-    private MSlot m_slot;
+    public Text m_countText;
 
-    public void Hyouzi()
+    private void Update()
     {
-        
+        if (MInventory2.m_instance == null) return;
+        MItemdata99 item = MInventory2.m_instance.selectItem;
+        if(item != null)
+        {
+            m_nameText.text = item.data.Getitemname;
+            m_setumeiText.text = item.data.Getitemsetuemi;
+            m_countText.text = $"×{item.count}";
+
+        }
+        else
+        {
+            m_nameText.text = "";
+            m_setumeiText.text = "";
+            m_countText.text = "";
+        }
     }
 }

@@ -34,6 +34,16 @@ public class MPlayerDamage : MonoBehaviour, IDamageable
         }
     }
 
+    public void Recovery(int value)
+    {
+        if (m_playerdata != null)
+        {
+            m_HP = Mathf.Min(m_HP + value, m_playerdata.MAXHP);
+            //HPゲージに反映
+            m_slider.value = (float)m_HP / (float)m_playerdata.MAXHP;
+        }
+    }
+
     //ダメージ処理のメソッド　valueには敵のATKの値が入っている
     public void Damage(int value)
     {

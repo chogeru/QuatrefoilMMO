@@ -17,6 +17,7 @@ MonoBehaviour:
   m_itemType: 9
   m_setumei: "HP\u3092100\u56DE\u5FA9\u3059\u308B"
   m_sprite: {fileID: 21300000, guid: fadd2c2aa3e906c46a273e039fdcf98e, type: 3}
+  m_effectType: 0
   m_HP: 100
   m_ATK: 0
   m_DEF: 0

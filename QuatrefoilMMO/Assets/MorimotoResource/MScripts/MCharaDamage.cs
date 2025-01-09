@@ -81,4 +81,9 @@ public class MCharaDamage : MonoBehaviour, IDamageable
         //ゲームオブジェクトを破壊
         Destroy(gameObject);
     }
+
+    public void Recovery(int value)
+    {
+
+    }
 }

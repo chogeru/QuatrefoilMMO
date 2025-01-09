@@ -18,6 +18,12 @@ public enum ItemType
     Important = 10, //重要
 }
 
+public enum ItemEffectType
+{
+    None = -1,
+    RecoveryHP,
+}
+
 //アイテムのソースデータ
 [CreateAssetMenu(menuName ="MAsset/ItemSourceData")]
 public class MItemSourceData : ScriptableObject
@@ -65,6 +71,13 @@ public class MItemSourceData : ScriptableObject
     public Sprite Getsprite
     {
         get { return m_sprite; }
+    }
+
+    [SerializeField]
+    private ItemEffectType m_effectType = ItemEffectType.None;
+    public ItemEffectType GetEffectType
+    {
+        get { return m_effectType; }
     }
 
     //アイテムの体力

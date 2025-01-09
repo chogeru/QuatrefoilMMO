@@ -5,6 +5,8 @@ using UnityEngine.Analytics;
 
 public class MPlayerControllerFencer : MonoBehaviour
 {
+    private static MPlayerControllerFencer m_instance;
+
     //歩き移動速度
     [SerializeField]
     private float m_moveWalkSpeed = 2f;
@@ -61,6 +63,8 @@ public class MPlayerControllerFencer : MonoBehaviour
 
     protected void Awake()
     {
+        m_instance = this;
+
         //メインカメラを取得
         //m_mainCamera = Camera.main;
         //プレイヤーのGameObjectにアタッチされているAnimatorコンポーネントを取得
@@ -322,44 +326,15 @@ public class MPlayerControllerFencer : MonoBehaviour
         return mplayerdata;
     }
 
-    [SerializeField]
-    private List<MItem2Data> m_item2DataListList = new List<MItem2Data>();  //プレイヤー所持アイテム
-    //アイテムを取得
-    public void CountItem(string itemid,int count)
+    public static void Recovery(int value)
     {
-        for(int i = 0; i < m_item2DataListList.Count; i++)
+        if (m_instance == null) return;
+        IDamageable damage = m_instance.GetComponent<IDamageable>();
+        if (damage != null)
         {
-            //IDが一致していたらカウント
-            if (m_item2DataListList[i].m_id == itemid)
-            {
-                m_item2DataListList[i].CountUp(count);
-                break;
-            }
+            damage.Recovery(value);
         }
-        //IDが一致しなければアイテムを追加
-        MItem2Data item2Data = new MItem2Data(itemid, count);
-        m_item2DataListList.Add(item2Data);
     }
 
-    //アイテムを使用
-    public void UseItem(string itemid,int count)
-    {
-        //リスト内を検索
-        for(int i = 0; i < m_item2DataListList.Count; i++)
-        {
-            //IDが一致していたらカウント
-            if (m_item2DataListList[i].m_id == itemid)
-            {
-                //アイテムをカウントダウン
-                m_item2DataListList[i].CountDwon(count);
-                if (m_item2DataListList.Count == 0)
-                {
-                    MItem2Data item2Data = new MItem2Data(itemid, count);
-                    m_item2DataListList.Remove(item2Data);
-                }
-                break;
-            }
-        }
-    }
 }
 
