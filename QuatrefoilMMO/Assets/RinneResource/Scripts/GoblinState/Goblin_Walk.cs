@@ -35,7 +35,7 @@ namespace RinneResourceStateMachineAI
             //移動スピードを歩きスピードに変化
             m_navmeshagent.speed = m_parameters.m_status.AGI;
             //目標移動地点
-            target_point = new Vector3(Random.Range(-49.0f, 49.0f), owner.transform.position.y, Random.Range(-49.0f, 49.0f));
+            target_point = owner.transform.position + new Vector3(Random.Range(-10.0f, 10.0f), 0, Random.Range(-10.0f, 10.0f));
         }
 
         //このAIが起動中に常に実行(Updateと同義)
@@ -55,6 +55,12 @@ namespace RinneResourceStateMachineAI
             m_navmeshagent.SetDestination(target_point);
             
             if(owner.transform.localPosition == target_point)
+            {
+                owner.ChangeState(AIState.Idle_Mode);
+            }
+
+            //死亡を検知したなら
+            if (m_parameters.GetDown())
             {
                 owner.ChangeState(AIState.Idle_Mode);
             }

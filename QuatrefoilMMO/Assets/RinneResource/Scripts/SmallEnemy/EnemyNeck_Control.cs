@@ -25,50 +25,50 @@ namespace RinneResourceStateMachineAI
             m_enemyai.GetComponent<EnemyAI>();
         }
 
-        private void LateUpdate()
-        {
-            NeckControl(true);
-        }
+        //private void LateUpdate()
+        //{
+        //    NeckControl(true);
+        //}
 
-        void NeckControl(bool flag)
-        {
-            //フラグ検知
-            if (!flag) return;
+        //void NeckControl(bool flag)
+        //{
+        //    //フラグ検知
+        //    if (!flag) return;
 
-            if (m_enemyai.m_neck != null)
-            {
-                if (!m_iswaitrot)
-                {
-                    float per = m_elapsedtime / m_neckrottime;
-                    if (per < 1f)
-                    {
-                        float alpha = Mathf.Sin(Mathf.PI * 2f * per);
-                        float angle = m_neckrotangle * alpha;
-                        //m_neck.localRotation *= Quaternion.Euler(angle, 0f, 0f);
-                        Vector3 euler = m_enemyai.m_neck.localRotation.eulerAngles;
-                        euler.x = angle;
-                        m_enemyai.m_neck.localRotation = Quaternion.Euler(euler);
+        //    if (m_enemyai.m_neck != null)
+        //    {
+        //        if (!m_iswaitrot)
+        //        {
+        //            float per = m_elapsedtime / m_neckrottime;
+        //            if (per < 1f)
+        //            {
+        //                float alpha = Mathf.Sin(Mathf.PI * 2f * per);
+        //                float angle = m_neckrotangle * alpha;
+        //                //m_neck.localRotation *= Quaternion.Euler(angle, 0f, 0f);
+        //                Vector3 euler = m_enemyai.m_neck.localRotation.eulerAngles;
+        //                euler.x = angle;
+        //                m_enemyai.m_neck.localRotation = Quaternion.Euler(euler);
 
-                    }
-                    else
-                    {
-                        m_elapsedtime -= m_neckrottime;
-                        m_iswaitrot = true;
-                    }
-                }
-                else
-                {
-                    if (m_elapsedtime >= 2f)
-                    {
-                        m_elapsedtime -= 2f;
-                        m_iswaitrot = false;
-                    }
-                }
-                m_elapsedtime += Time.deltaTime;
-                //m_neck.rotation = Quaternion.Euler(0f, 0f, -1f);
-            }
+        //            }
+        //            else
+        //            {
+        //                m_elapsedtime -= m_neckrottime;
+        //                m_iswaitrot = true;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (m_elapsedtime >= 2f)
+        //            {
+        //                m_elapsedtime -= 2f;
+        //                m_iswaitrot = false;
+        //            }
+        //        }
+        //        m_elapsedtime += Time.deltaTime;
+        //        //m_neck.rotation = Quaternion.Euler(0f, 0f, -1f);
+        //    }
 
-        }
+        //}
     }
 }
 

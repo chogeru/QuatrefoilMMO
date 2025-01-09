@@ -22,6 +22,8 @@ namespace RinneResourceStateMachineAI
         {
             //スポーンカウントの初期状態は0
             m_spawncnt = 0;
+            //開始後すぐモンスター召喚
+            m_elapsedtime = m_cooltime;
         }
 
         //現在のスポーンした数を取得
@@ -33,7 +35,7 @@ namespace RinneResourceStateMachineAI
         //撃破されたので数を減らす
         public int DownSpawncnt()
         {
-            return m_spawncnt - 1;
+            return m_spawncnt--;
         }
 
         void Update()

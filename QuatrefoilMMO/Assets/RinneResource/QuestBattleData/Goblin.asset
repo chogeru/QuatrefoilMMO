@@ -15,9 +15,8 @@ MonoBehaviour:
   m_name: "\u30B4\u30D6\u30EA\u30F3"
   m_state:
   - Goblin_Idle
-  - Goblin_Walk
   - Goblin_Battle
   - Goblin_Chase
   - Goblin_Attack
+  - Goblin_Down
   obj: {fileID: 8845424265005524899, guid: 0d9f8c55bd0859a4882a804b14a433ba, type: 3}
-  m_hp: 50

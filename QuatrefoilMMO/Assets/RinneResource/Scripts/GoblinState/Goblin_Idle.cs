@@ -14,9 +14,6 @@ namespace RinneResourceStateMachineAI
         private Animator m_animator;
         private Parameters m_parameters;
 
-        float m_elapsedtime;        //経過時間
-        float m_cooltime;           //クールタイム
-
         //コンストラクタ
         public Goblin_Idle(EnemyAI owner) : base(owner) {}
         //このAIが起動した瞬間に実行(Startと同義)
@@ -29,10 +26,6 @@ namespace RinneResourceStateMachineAI
             m_parameters = owner.GetParameters();
             //バトルアニメーション解除
             m_animator.SetBool("IsBattleMode_Enemy", false);
-
-            m_elapsedtime = 0.0f;
-            //1から5秒をランダム
-            m_cooltime = Random.Range(1.0f, 5.0f);
         }
 
         //このAIが起動中に常に実行(Updateと同義)
@@ -44,14 +37,12 @@ namespace RinneResourceStateMachineAI
                 //バトルモードに変更
                 owner.ChangeState(AIState.Battle_Mode);
             }
-            //クールタイム経過
-            if (m_elapsedtime > m_cooltime)
+
+            //死亡を検知したなら
+            if(m_parameters.GetDown())
             {
-                //移動モードに変更
-                owner.ChangeState(AIState.Walk_Mode);
+                owner.ChangeState(AIState.Down_Mode);
             }
-            //経過時間処理
-            m_elapsedtime += Time.deltaTime;
         }
 
         //このAIが終了した瞬間に実行

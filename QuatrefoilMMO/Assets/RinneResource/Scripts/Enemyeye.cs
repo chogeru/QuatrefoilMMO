@@ -27,6 +27,7 @@ namespace RinneResourceStateMachineAI
         {
             //一度発見したプレイヤーとの距離を図り続ける
             if(m_player != null) m_posdelta = m_player.transform.position - transform.position;
+            //高さは考慮しない
             m_posdelta.y = 0;
 
         }

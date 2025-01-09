@@ -142,6 +142,12 @@ namespace RinneResourceStateMachineAI
             //経過時間処理
             m_elapsedtime += Time.deltaTime;
             m_actiontime += Time.deltaTime;
+
+            //死亡を検知したなら
+            if (m_parameters.GetDown())
+            {
+                owner.ChangeState(AIState.Down_Mode);
+            }
         }
 
         public override void Exit()

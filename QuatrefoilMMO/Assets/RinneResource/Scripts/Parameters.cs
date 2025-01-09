@@ -31,6 +31,8 @@ public class Parameters : MonoBehaviour
         public bool IsFlag;         //探索フラグ
     }
 
+    private bool m_isdown = false;      //死亡フラグ
+
     [SerializeField]
     public Parameter m_status;
 
@@ -39,7 +41,7 @@ public class Parameters : MonoBehaviour
         //ヒットポイントが0で削除
         if (m_status.HP <= 0)
         {
-            Destroy(this.gameObject);
+            m_isdown = true;
         }
     }
 
@@ -55,4 +57,8 @@ public class Parameters : MonoBehaviour
         return m_status.type.ToString();
     }
 
+    public bool GetDown()
+    {
+        return m_isdown;
+    }
 }

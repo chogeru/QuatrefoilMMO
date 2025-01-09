@@ -9,9 +9,10 @@ using AbubuResouse.Log;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using RinneResource;
 
 /// <summary>
-/// 小型モンスター用AI
+/// モンスターAI
 /// </summary>
 
 namespace RinneResourceStateMachineAI
@@ -19,11 +20,10 @@ namespace RinneResourceStateMachineAI
     public enum AIState
     {
         Idle_Mode,
-        Walk_Mode,
         Battle_Mode,
         Chase_Mode,
         Attack_Mode,
-        Lost_Mode
+        Down_Mode,
     }
 
     public class EnemyAI
@@ -37,16 +37,17 @@ namespace RinneResourceStateMachineAI
         private Rigidbody m_rb;
         //敵のパラメーター
         private Parameters m_parameters;
-        //敵のスポーン
+        //小型敵のスポーン
         private EnemySpawn m_enemyspawn;
+        //ボスのスポーン
+        private BossBattleMovie m_bossbattlemovie;
         //視野判定処理
         private Enemyeye m_eye;
         //ターゲットプレイヤー
         public GameObject m_targetplayer;
         //UI
         public GameObject m_ui;
-        //首
-        public Transform m_neck;
+        
         [SerializeField,Header("攻撃用当たり判定")]
         private GameObject m_attackbox;
 
@@ -141,7 +142,8 @@ namespace RinneResourceStateMachineAI
         private void OnDestroy()
         {
             //ポップした数を減らす
-            m_enemyspawn.DownSpawncnt();
+            if(m_enemyspawn != null)m_enemyspawn.DownSpawncnt();
+            if (m_bossbattlemovie != null) m_bossbattlemovie.CountDown();
 
             //ランダムでアイテムをドロップさせる
         }
@@ -192,6 +194,11 @@ namespace RinneResourceStateMachineAI
         public Enemyeye GetEnemyeye()
         {
             return m_eye;
+        }
+
+        void Kill()
+        {
+            Destroy(this.gameObject);
         }
     }
 }

@@ -60,6 +60,12 @@ namespace RinneResourceStateMachineAI
                 //未発見状態に変更
                 m_parameters.m_status.IsFlag = false;
             }
+
+            //死亡を検知したなら
+            if (m_parameters.GetDown())
+            {
+                owner.ChangeState(AIState.Battle_Mode);
+            }
         }
 
         public override void Exit()

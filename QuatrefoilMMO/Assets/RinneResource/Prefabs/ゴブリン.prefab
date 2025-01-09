@@ -2805,7 +2805,6 @@ GameObject:
   - component: {fileID: 8845424265005524897}
   - component: {fileID: 8845424265005524902}
   - component: {fileID: 311166460752100456}
-  - component: {fileID: 6931174025643176207}
   - component: {fileID: 3027838538396258901}
   m_Layer: 0
   m_Name: "\u30B4\u30D6\u30EA\u30F3"
@@ -2895,16 +2894,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 8845424265005524899}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Speed: 3.5
   m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 2
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1.75
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -2924,21 +2923,6 @@ MonoBehaviour:
   m_ui: {fileID: 2384987294537270833}
   m_neck: {fileID: 8845424265005234695}
   m_attackbox: {fileID: 7288036621655800225}
---- !u!114 &6931174025643176207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8845424265005524899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23456892f983c1d448abc9d9d9308fd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_enemyai: {fileID: 311166460752100456}
-  m_neckrotangle: 30
-  m_neckrottime: 2
 --- !u!114 &3027838538396258901
 MonoBehaviour:
   m_ObjectHideFlags: 0

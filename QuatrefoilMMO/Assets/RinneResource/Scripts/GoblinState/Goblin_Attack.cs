@@ -15,8 +15,10 @@ namespace RinneResourceStateMachineAI
         private float m_cooltime;
 
         private Animator m_animator;
+        private Parameters m_parameters;
         private GameObject m_attackbox;
 
+        //コンストラクタ
         public Goblin_Attack(EnemyAI owner) : base(owner) {}
 
         public override void Enter()
@@ -24,6 +26,8 @@ namespace RinneResourceStateMachineAI
             DebugUtility.Log("Goblin_Attackを起動しました");
             //アニメーションコンポーネント取得
             m_animator = owner.GetAnimator();
+            //パラメータコンポーネント取得
+            m_parameters = owner.GetParameters();
             //当たり判定オブジェクト取得
             m_attackbox = owner.GetAttackBox();
             Attack1();
@@ -35,6 +39,12 @@ namespace RinneResourceStateMachineAI
             //攻撃の後隙時間
             //ステートの切り替え
             if (m_cooltime < m_elapsedtime)
+            {
+                owner.ChangeState(AIState.Battle_Mode);
+            }
+
+            //死亡を検知したなら
+            if (m_parameters.GetDown())
             {
                 owner.ChangeState(AIState.Battle_Mode);
             }

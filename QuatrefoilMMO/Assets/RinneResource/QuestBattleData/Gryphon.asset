@@ -15,6 +15,8 @@ MonoBehaviour:
   m_name: "\u30B0\u30EA\u30D5\u30A9\u30F3"
   m_state:
   - Gryphon_Idle
-  - Gryphon_Walk
   - Gryphon_Battle
+  - Gryphon_Chase
+  - Gryphon_Attack
+  - Gryphon_Down
   obj: {fileID: 2496650077270763257, guid: 821bb07abf6fd804c863561bd1cc26fa, type: 3}
