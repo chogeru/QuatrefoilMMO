@@ -41,11 +41,11 @@ public class MPlayrsStats : MonoBehaviour
 
         string m_playerMAXHP = ($"HP {m_playerdata.PlayerMAXHP}");
         string m_playerMAXMP = ($"MP {m_playerdata.PlayerMAXMP}");
-        string m_playerATK = ($"MP {m_playerdata.PlayerATK}");
-        string m_playerDEF = ($"MP {m_playerdata.PlayerDEF}");
-        string m_playerINT = ($"MP {m_playerdata.PlayerINT}");
-        string m_playerRES = ($"MP {m_playerdata.PlayerRES}");
-        string m_playerAGI = ($"MP {m_playerdata.PlayerAGI}");
+        string m_playerATK = ($"ATK {m_playerdata.PlayerATK}");
+        string m_playerDEF = ($"DEF {m_playerdata.PlayerDEF}");
+        string m_playerINT = ($"INT {m_playerdata.PlayerINT}");
+        string m_playerRES = ($"RES {m_playerdata.PlayerRES}");
+        string m_playerAGI = ($"AGI {m_playerdata.PlayerAGI}");
 
         m_PlayerMAXHP.text = m_playerMAXHP;
         m_PlayerMAXMP.text = m_playerMAXMP;
