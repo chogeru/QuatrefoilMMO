@@ -89,7 +89,7 @@ Material:
     - _BumpScale: 1
     - _ChromaticAberration: 0.124
     - _CoastOpacity: 0.4
-    - _CoastalBlending: 0.21
+    - _CoastalBlending: 0.128
     - _CoastalTransparency: 0
     - _Cutoff: 0.5
     - _DepthDistance: 1.7
@@ -102,8 +102,8 @@ Material:
     - _Float0: -1.5
     - _FoamContrast: 1
     - _FoamDensity: 0.5
-    - _FoamDistance: 0.2
-    - _FoamOpacity: 0.2
+    - _FoamDistance: 0.192
+    - _FoamOpacity: 0.088
     - _FoamScale: 50
     - _FoamTile: 4
     - _FoamTiling: 50
@@ -112,14 +112,14 @@ Material:
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
-    - _NormalIntensity: 0.6
+    - _NormalIntensity: 0.399
     - _OcclusionStrength: 1
     - _Opacity: 0
     - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RefractionFactor: 0.5
+    - _RefractionFactor: 1
     - _RefractionScale: 0.7
     - _Scale: 50
     - _Smoothness: 0.95
@@ -134,8 +134,8 @@ Material:
     - _TessellationMaxDistance: 50
     - _TessellationMinDistance: 5
     - _Tiling: 0.15
-    - _Transparency: 0.8
-    - _TransparencyFade: 0.46
+    - _Transparency: 0.16
+    - _TransparencyFade: 1.044
     - _Turbidity: 0
     - _TurbidityFade: 0.5
     - _UVSec: 0
@@ -147,7 +147,7 @@ Material:
     - _WavesHeight: 1.09
     - _WavesNormalIntensity: 0.73
     - _WavesScale: 2
-    - _WavesSpeed: 0.405
+    - _WavesSpeed: 0.351
     - _WavesTile: 0.15
     - _ZWrite: 1
     - __dirty: 1
@@ -157,5 +157,5 @@ Material:
     - _Color2: {r: 1, g: 0.2880787, b: 0.2216981, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
-    - _WaterColor: {r: 0.17153195, g: 0.47534996, b: 0.5566038, a: 0}
+    - _WaterColor: {r: 0, g: 0.44163388, b: 0.5660378, a: 0}
   m_BuildTextureStacks: []
