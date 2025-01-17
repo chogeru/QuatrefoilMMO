@@ -122,12 +122,12 @@ Material:
     - _ReceiveShadowRate: 1
     - _RenderQueueOffset: 0
     - _RimFresnelPower: 100
-    - _RimLift: 0.1
+    - _RimLift: 1
     - _RimLightingMix: 0
     - _ShadeShift: -0.000000011175871
     - _ShadeToony: 0.9
     - _ShadingGradeRate: 1
-    - _ShadingShiftFactor: -0.05
+    - _ShadingShiftFactor: 1
     - _ShadingShiftTexScale: 1
     - _ShadingToonyFactor: 0.95
     - _SrcBlend: 1
