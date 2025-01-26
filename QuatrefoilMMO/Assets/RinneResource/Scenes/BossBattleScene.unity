@@ -9251,6 +9251,7 @@ MonoBehaviour:
   m_attackHit: {fileID: 3829595600066518023}
   m_attackHitCall: {fileID: 3829595600066518024}
   m_footColliderCall: {fileID: 3829595599069118099}
+  m_mainCamera: {fileID: 587281910}
 --- !u!4 &6675370450214235113
 Transform:
   m_ObjectHideFlags: 0
