@@ -182,7 +182,7 @@ MonoBehaviour:
     m_Value: 4
   sharpenDepthThreshold:
     m_OverrideState: 1
-    m_Value: 0.0451
+    m_Value: 0.05
   sharpenMinMaxDepth:
     m_OverrideState: 0
     m_Value: {x: 0, y: 0.999}
@@ -232,13 +232,13 @@ MonoBehaviour:
     m_Value: 1
   saturate:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 0
   brightness:
     m_OverrideState: 1
     m_Value: 1
   contrast:
     m_OverrideState: 1
-    m_Value: 1.417
+    m_Value: 1
   daltonize:
     m_OverrideState: 0
     m_Value: 0
