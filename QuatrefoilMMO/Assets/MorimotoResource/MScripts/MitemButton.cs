@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+#if UNITY_EDITOR
 using static UnityEditor.Progress;
+#endif
 
 public class MitemButton : MonoBehaviour,
     IPointerClickHandler,

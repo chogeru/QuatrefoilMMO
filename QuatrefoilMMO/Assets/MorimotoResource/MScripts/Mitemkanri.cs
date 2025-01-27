@@ -5,14 +5,17 @@ using System.ComponentModel;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
+#if UNITY_EDITOR
 using UnityEditorInternal.Profiling.Memory.Experimental;
+using static UnityEditor.Progress;
+#endif
 using UnityEngine;
 using UnityEngine.AI;
 
 using UnityEngine.UI;
 using static Mitemdata;
 using static MagicaCloth2.TeamManager;
-using static UnityEditor.Progress;
+
 
 public class Mitemkanri : MonoBehaviour
 {

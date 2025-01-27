@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static MagicaCloth2.TeamManager;
+#if UNITY_EDITOR
 using static UnityEditor.Progress;
+#endif
 
 [CreateAssetMenu(menuName = "Data/Create ItemDataBase")]
 

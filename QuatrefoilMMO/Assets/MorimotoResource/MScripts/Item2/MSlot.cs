@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditorInternal.Profiling.Memory.Experimental;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class MSlot : MonoBehaviour
 {
