@@ -7,7 +7,7 @@ public class MMenutyousei : MonoBehaviour
     [SerializeField]
     private GameObject m_menuObj;
     //Menuが開かれているか
-    bool m_isMunuOn = false;
+    public bool m_isMunuOn = false;
 
     private void Update()
     {
@@ -27,6 +27,12 @@ public class MMenutyousei : MonoBehaviour
                 m_isMunuOn = false;
             }
         }
+    }
+
+    public void Off()
+    {
+        m_menuObj.gameObject.SetActive(false);
+        m_isMunuOn = false;
     }
 
 }

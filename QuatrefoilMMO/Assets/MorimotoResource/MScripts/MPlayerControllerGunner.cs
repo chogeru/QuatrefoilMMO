@@ -189,7 +189,7 @@ public class MPlayerControllerGunner : MonoBehaviour
     //    if (col.gameObject.tag == "Ground")
     //    {
     //        m_isGround = true;
-    //        m_animator.SetBool("isGround", m_isGround);
+    //        m_animator.SetInteger("isGround", m_isGround);
     //    }
     //}
 
@@ -199,7 +199,7 @@ public class MPlayerControllerGunner : MonoBehaviour
     //    if (col.gameObject.tag == "Ground")
     //    {
     //        m_isGround = false;
-    //        m_animator.SetBool("isGround", m_isGround);
+    //        m_animator.SetInteger("isGround", m_isGround);
     //    }
     //}
 

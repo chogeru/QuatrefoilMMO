@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MPlayerDamage : MonoBehaviour, IDamageable
 {
-    //シリアル化している　playerdataの自身を指定
+    //シリアル化している　Mplayerdataの自身を指定
     [SerializeField]
     private Mplayerdata m_playerdata;
 
@@ -18,6 +18,9 @@ public class MPlayerDamage : MonoBehaviour, IDamageable
     //シリアル化　SliderのHPゲージ指定
     [SerializeField]
     private Slider m_slider;
+
+    [SerializeField]
+    private MPlayerControllerFencer m_player;
 
     private int m_HP;
 
@@ -66,7 +69,6 @@ public class MPlayerDamage : MonoBehaviour, IDamageable
     //死亡処理のメソッド
     public void Death()
     {
-        //ゲームオブジェクトを破壊
-        Destroy(gameObject);
+        m_player.Death();
     }
 }

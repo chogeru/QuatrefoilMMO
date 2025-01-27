@@ -60,6 +60,10 @@ public class MPlayerControllerFencer : MonoBehaviour
     bool m_Attackdekiru = true;
     //コンボ終了時のスキの時間
     float m_ComboEndtime = 1f;
+    [SerializeField]
+    private GameObject m_TrailObject;
+    //軌跡
+    private TrailRenderer m_Kiseki;
 
     protected void Awake()
     {
@@ -79,6 +83,9 @@ public class MPlayerControllerFencer : MonoBehaviour
         m_attackHitCall.TriggerEnterEvent.AddListener(OnAttackHitTriggerEnter);
 
         m_moveSpeed = m_moveWalkSpeed;
+
+        m_Kiseki = m_TrailObject.GetComponent<TrailRenderer>();
+        m_Kiseki.emitting = false;
 
         ////FootSphereのイベント登録
         m_footColliderCall.TriggerStayEvent.AddListener(OnFootTriggerStay);
@@ -101,6 +108,7 @@ public class MPlayerControllerFencer : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            m_Kiseki.emitting = true;
             //boolで設定したisAttackをtrueにする
             m_animator.SetBool("isAttack", true);
         }
@@ -299,9 +307,10 @@ public class MPlayerControllerFencer : MonoBehaviour
         m_animator.SetFloat("Attack", 0f);
         m_Attack = m_animator.GetFloat("Attack");
         */
-        
+
         //攻撃判定用オブジェクトをオフにする
         //m_attackHit.SetActive(false);
+        m_Kiseki.emitting = false;
     }
 
     //floatの連続攻撃
@@ -315,6 +324,17 @@ public class MPlayerControllerFencer : MonoBehaviour
         m_Attackdekiru = true;
     }
     */
+
+    public void Death()
+    {
+        //死亡アニメーション開始。
+        m_animator.SetBool("Death", true);
+    }
+
+    public void DeathEnd()
+    {
+        Destroy(gameObject);
+    }
 
     public Mplayerdata Sousacharakoushin()
     {

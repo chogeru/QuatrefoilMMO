@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MCharaDamage : MonoBehaviour, IDamageable
 {
-    //シリアル化している　playerdataのPlayerを指定
+    //シリアル化している　MplayerdataのPlayerを指定
     [SerializeField]
     private Mplayerdata m_playerdata;
 
