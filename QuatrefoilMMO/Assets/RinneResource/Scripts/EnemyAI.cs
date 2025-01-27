@@ -147,7 +147,7 @@ namespace RinneResourceStateMachineAI
             if(m_enemyspawn != null)m_enemyspawn.DownSpawncnt();
             if (m_bossbattlemovie != null) m_bossbattlemovie.CountDown();
 
-            m_game.Addcnt();
+            //m_game.Addcnt();
             //ランダムでアイテムをドロップさせる
         }
 
@@ -202,6 +202,16 @@ namespace RinneResourceStateMachineAI
         void Kill()
         {
             Destroy(this.gameObject);
+        }
+
+        void OnHitBox()
+        {
+            m_attackbox.SetActive(true);
+        }
+
+        void OffHitBox()
+        {
+            m_attackbox.SetActive(false);
         }
     }
 }

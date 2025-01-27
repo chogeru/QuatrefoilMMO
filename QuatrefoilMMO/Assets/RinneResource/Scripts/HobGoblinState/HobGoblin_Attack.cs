@@ -13,7 +13,6 @@ namespace RinneResourceStateMachineAI
 
         private Animator m_animator;
         private Parameters m_parameters;
-        private GameObject m_attackbox;
 
         public HobGoblin_Attack(EnemyAI owner) : base(owner) { }
 
@@ -24,8 +23,6 @@ namespace RinneResourceStateMachineAI
             m_animator = owner.GetAnimator();
             //パラメータコンポーネント取得
             m_parameters = owner.GetParameters();
-            //当たり判定オブジェクト取得
-            m_attackbox = owner.GetAttackBox();
             Attack1();
             m_cooltime = 2;
         }
@@ -51,8 +48,6 @@ namespace RinneResourceStateMachineAI
         public override void Exit()
         {
             m_elapsedtime -= m_cooltime;
-            //当たり判定削除
-            m_attackbox.SetActive(false);
             DebugUtility.Log("HobGoblin_Attackを終了しました");
         }
 
@@ -60,8 +55,6 @@ namespace RinneResourceStateMachineAI
         private void Attack1()
         {
             m_animator.SetTrigger("IsAttack1_Enemy");
-            //当たり判定出現
-            m_attackbox.SetActive(true);
         }
     }
 }
