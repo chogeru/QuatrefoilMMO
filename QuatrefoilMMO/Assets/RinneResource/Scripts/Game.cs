@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UniGLTF.Extensions.VRMC_vrm;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
@@ -20,7 +21,8 @@ public class Game : MonoBehaviour
     {
         if(0 >= mokuhyou)
         {
-            m_textobject.SetActive(true);
+            // m_textobject.SetActive(true);
+            SceneManager.LoadScene("ResultScene");
         }
 
         m_text.text = "残り" + mokuhyou.ToString();

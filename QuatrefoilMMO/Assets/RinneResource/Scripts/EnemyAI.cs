@@ -69,7 +69,7 @@ namespace RinneResourceStateMachineAI
             //オブジェクトの首を取得
             //m_neck = animator.GetBoneTransform(HumanBodyBones.Neck);
 
-            //m_game = GameObject.Find("GameManager").GetComponent<Game>();
+            m_game = GameObject.Find("GameManager").GetComponent<Game>();
             //初回起動時は攻撃用当たり判定をオフにする
             m_attackbox.SetActive(false);
             //発見時のUIをオフにする
@@ -147,7 +147,7 @@ namespace RinneResourceStateMachineAI
             if(m_enemyspawn != null)m_enemyspawn.DownSpawncnt();
             if (m_bossbattlemovie != null) m_bossbattlemovie.CountDown();
 
-            //m_game.Addcnt();
+            m_game.Addcnt();
             //ランダムでアイテムをドロップさせる
         }
 
