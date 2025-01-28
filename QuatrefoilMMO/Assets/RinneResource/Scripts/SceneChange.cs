@@ -7,6 +7,6 @@ public class SceneChange : MonoBehaviour
 {
     public void SceneChanger()
     {
-        SceneManager.LoadScene("MGrassLandAreaScene");
+        SceneManager.LoadScene("RinneGrassLand2");
     }
 }

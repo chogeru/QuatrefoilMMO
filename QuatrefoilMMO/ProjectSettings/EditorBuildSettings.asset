@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/MorimotoResource/MScenes/MGrassLandAreaScene.unity
     guid: 3673ee66033c9574ebf079cbb19879be
+  - enabled: 1
+    path: Assets/RinneResource/Scenes/RinneGrassLand2.unity
+    guid: 4c708e8e81be7624e944eefecb2143b6
   - enabled: 1
     path: Assets/RinneResource/Scenes/ResultScene.unity
     guid: 6724a6c12e2f8194f8e14204f6539e8b

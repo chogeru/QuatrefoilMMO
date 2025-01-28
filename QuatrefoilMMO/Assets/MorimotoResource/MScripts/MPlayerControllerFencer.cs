@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
+using UnityEngine.SceneManagement;
 
 public class MPlayerControllerFencer : MonoBehaviour
 {
@@ -333,7 +334,8 @@ public class MPlayerControllerFencer : MonoBehaviour
 
     public void DeathEnd()
     {
-        Destroy(gameObject);
+        SceneManager.LoadScene("ResultScene");
+        //Destroy(gameObject);
     }
 
     public Mplayerdata Sousacharakoushin()
