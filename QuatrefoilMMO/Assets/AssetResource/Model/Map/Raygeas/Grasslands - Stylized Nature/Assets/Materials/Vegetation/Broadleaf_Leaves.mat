@@ -8,11 +8,10 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Broadleaf_Leaves
-  m_Shader: {fileID: 4800000, guid: c47d9210692ed674187da9357a4bcd28, type: 3}
+  m_Shader: {fileID: 4800000, guid: 1d10d370c3f169448b4d855d9b93645f, type: 3}
   m_ValidKeywords:
   - _COLOR2ENABLE_ON
   - _ENABLEWIND_ON
-  - _SECONDCOLOROVERLAYTYPE_VERTEX_GRADIENT
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -96,6 +95,7 @@ Material:
     - _ADWda: 0
     - _AlphaCutoff: 0.2
     - _AmbientInt: 0
+    - _Anchorthefoliagebase: 0
     - _BumpScale: 1
     - _Color2Enable: 1
     - _Color2Enablege: 0
@@ -152,6 +152,7 @@ Material:
     - _UVSec: 0
     - _WindFlowDensity: 1
     - _WindForce: 0.3
+    - _WindSpeed: 0.5
     - _WindWavesScale: 0.75
     - _WorldNoiseScale: 1
     - _WorldScale: 1

@@ -83,9 +83,9 @@ Material:
     - _Coverageon: 0
     - _EnvironmentReflections: 1
     - _Glossiness: 1
-    - _MaskContrast: 1
-    - _MaskTilingX: 1
-    - _MaskTilingY: 1
+    - _MaskContrast: 0
+    - _MaskTilingX: 0
+    - _MaskTilingY: 0
     - _Metallic: 1
     - _NormalBlending: 1
     - _OcclusionStrength: 1
