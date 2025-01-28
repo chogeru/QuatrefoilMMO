@@ -756,15 +756,15 @@ MonoBehaviour:
   m_status:
     type: 1
     LV: 1
-    HP: 1000
+    HP: 2000
     MP: 0
     ATK: 200
     DEF: 0
     RES: 0
     AGI: 1
     EXP: 0
-    MaxDistance: 5
-    MaxAngle: 45
+    MaxDistance: 10
+    MaxAngle: 60
     IsFlag: 0
 --- !u!114 &3332071970940291768
 MonoBehaviour:

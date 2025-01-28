@@ -2639,15 +2639,15 @@ MonoBehaviour:
   m_status:
     type: 1
     LV: 0
-    HP: 400
+    HP: 600
     MP: 0
     ATK: 130
     DEF: 0
     RES: 0
     AGI: 1
     EXP: 0
-    MaxDistance: 5
-    MaxAngle: 45
+    MaxDistance: 10
+    MaxAngle: 60
     IsFlag: 0
 --- !u!1 &7366305515474043340
 GameObject:
